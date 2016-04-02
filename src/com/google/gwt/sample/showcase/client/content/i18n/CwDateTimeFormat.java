@@ -44,281 +44,278 @@ import java.util.Date;
  */
 @ShowcaseStyle(".cw-RedText")
 public class CwDateTimeFormat extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwDateTimeFormatDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwDateTimeFormatDescription();
 
-    String cwDateTimeFormatFailedToParseInput();
+		String cwDateTimeFormatFailedToParseInput();
 
-    String cwDateTimeFormatFormattedLabel();
+		String cwDateTimeFormatFormattedLabel();
 
-    String cwDateTimeFormatInvalidPattern();
+		String cwDateTimeFormatInvalidPattern();
 
-    String cwDateTimeFormatName();
+		String cwDateTimeFormatName();
 
-    String cwDateTimeFormatPatternLabel();
+		String cwDateTimeFormatPatternLabel();
 
-    String[] cwDateTimeFormatPatterns();
+		String[] cwDateTimeFormatPatterns();
 
-    String cwDateTimeFormatValueLabel();
-  }
+		String cwDateTimeFormatValueLabel();
+	}
 
-  /**
-   * The {@link DateTimeFormat} that is currently being applied.
-   */
-  private DateTimeFormat activeFormat = null;
+	/**
+	 * The {@link DateTimeFormat} that is currently being applied.
+	 */
+	private DateTimeFormat activeFormat = null;
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * The {@link Label} where the formatted value is displayed.
-   */
-  @ShowcaseData
-  private Label formattedBox = null;
+	/**
+	 * The {@link Label} where the formatted value is displayed.
+	 */
+	@ShowcaseData
+	private Label formattedBox = null;
 
-  /**
-   * The {@link TextBox} that displays the current pattern.
-   */
-  @ShowcaseData
-  private TextBox patternBox = null;
+	/**
+	 * The {@link TextBox} that displays the current pattern.
+	 */
+	@ShowcaseData
+	private TextBox patternBox = null;
 
-  /**
-   * The {@link ListBox} that holds the patterns.
-   */
-  @ShowcaseData
-  private ListBox patternList = null;
+	/**
+	 * The {@link ListBox} that holds the patterns.
+	 */
+	@ShowcaseData
+	private ListBox patternList = null;
 
-  /**
-   * The {@link TextBox} where the user enters a value.
-   */
-  @ShowcaseData
-  private TextBox valueBox = null;
+	/**
+	 * The {@link TextBox} where the user enters a value.
+	 */
+	@ShowcaseData
+	private TextBox valueBox = null;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwDateTimeFormat(CwConstants constants) {
-    super(constants.cwDateTimeFormatName(),
-        constants.cwDateTimeFormatDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwDateTimeFormat(CwConstants constants) {
+		super(constants.cwDateTimeFormatName(), constants.cwDateTimeFormatDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Use a Grid to layout the content
-    Grid layout = new Grid(4, 2);
-    CellFormatter formatter = layout.getCellFormatter();
-    layout.setCellSpacing(5);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Use a Grid to layout the content
+		Grid layout = new Grid(4, 2);
+		CellFormatter formatter = layout.getCellFormatter();
+		layout.setCellSpacing(5);
 
-    // Add a field to select the pattern
-    patternList = new ListBox();
-    patternList.setWidth("17em");
-    String[] patterns = constants.cwDateTimeFormatPatterns();
-    for (String pattern : patterns) {
-      patternList.addItem(pattern);
-    }
-    patternList.addChangeHandler(new ChangeHandler() {
-      public void onChange(ChangeEvent event) {
-        updatePattern();
-      }
-    });
-    layout.setHTML(0, 0, constants.cwDateTimeFormatPatternLabel());
-    layout.setWidget(0, 1, patternList);
+		// Add a field to select the pattern
+		patternList = new ListBox();
+		patternList.setWidth("17em");
+		String[] patterns = constants.cwDateTimeFormatPatterns();
+		for (String pattern : patterns) {
+			patternList.addItem(pattern);
+		}
+		patternList.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				updatePattern();
+			}
+		});
+		layout.setHTML(0, 0, constants.cwDateTimeFormatPatternLabel());
+		layout.setWidget(0, 1, patternList);
 
-    // Add a field to display the pattern
-    patternBox = new TextBox();
-    patternBox.setWidth("17em");
-    patternBox.addKeyUpHandler(new KeyUpHandler() {
-      public void onKeyUp(KeyUpEvent event) {
-        updatePattern();
-      }
-    });
+		// Add a field to display the pattern
+		patternBox = new TextBox();
+		patternBox.setWidth("17em");
+		patternBox.addKeyUpHandler(new KeyUpHandler() {
+			public void onKeyUp(KeyUpEvent event) {
+				updatePattern();
+			}
+		});
 
-    layout.setWidget(1, 1, patternBox);
+		layout.setWidget(1, 1, patternBox);
 
-    // Add a field to set the value
-    valueBox = new TextBox();
-    valueBox.setWidth("17em");
-    valueBox.setText("13 September 1999 12:34:56");
-    valueBox.addKeyUpHandler(new KeyUpHandler() {
+		// Add a field to set the value
+		valueBox = new TextBox();
+		valueBox.setWidth("17em");
+		valueBox.setText("13 September 1999 12:34:56");
+		valueBox.addKeyUpHandler(new KeyUpHandler() {
 
-      public void onKeyUp(KeyUpEvent event) {
-        updateFormattedValue();
-      }
+			public void onKeyUp(KeyUpEvent event) {
+				updateFormattedValue();
+			}
 
-    });
+		});
 
-    layout.setHTML(2, 0, constants.cwDateTimeFormatValueLabel());
-    layout.setWidget(2, 1, valueBox);
+		layout.setHTML(2, 0, constants.cwDateTimeFormatValueLabel());
+		layout.setWidget(2, 1, valueBox);
 
-    // Add a field to display the formatted value
-    formattedBox = new Label();
-    formattedBox.setWidth("17em");
-    layout.setHTML(3, 0, constants.cwDateTimeFormatFormattedLabel());
-    layout.setWidget(3, 1, formattedBox);
-    formatter.setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_TOP);
+		// Add a field to display the formatted value
+		formattedBox = new Label();
+		formattedBox.setWidth("17em");
+		layout.setHTML(3, 0, constants.cwDateTimeFormatFormattedLabel());
+		layout.setWidget(3, 1, formattedBox);
+		formatter.setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_TOP);
 
-    // Return the layout Widget
-    updatePattern();
-    return layout;
-  }
+		// Return the layout Widget
+		updatePattern();
+		return layout;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwDateTimeFormat.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwDateTimeFormat.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Show an error message. Pass in null to clear the error message.
-   *
-   * @param errorMsg the error message
-   */
-  @ShowcaseSource
-  private void showErrorMessage(String errorMsg) {
-    if (errorMsg == null) {
-      formattedBox.removeStyleName("cw-RedText");
-    } else {
-      formattedBox.setText(errorMsg);
-      formattedBox.addStyleName("cw-RedText");
-    }
-  }
+	/**
+	 * Show an error message. Pass in null to clear the error message.
+	 *
+	 * @param errorMsg
+	 *            the error message
+	 */
+	@ShowcaseSource
+	private void showErrorMessage(String errorMsg) {
+		if (errorMsg == null) {
+			formattedBox.removeStyleName("cw-RedText");
+		} else {
+			formattedBox.setText(errorMsg);
+			formattedBox.addStyleName("cw-RedText");
+		}
+	}
 
-  /**
-   * Update the formatted value based on the user entered value and pattern.
-   */
-  @SuppressWarnings("deprecation")
-  @ShowcaseSource
-  private void updateFormattedValue() {
-    String sValue = valueBox.getText();
-    if (!sValue.equals("")) {
-      try {
-        Date date = new Date(sValue);
-        String formattedValue = activeFormat.format(date);
-        formattedBox.setText(formattedValue);
-        showErrorMessage(null);
-      } catch (IllegalArgumentException e) {
-        showErrorMessage(constants.cwDateTimeFormatFailedToParseInput());
-      }
-    } else {
-      formattedBox.setText("<None>");
-    }
-  }
+	/**
+	 * Update the formatted value based on the user entered value and pattern.
+	 */
+	@SuppressWarnings("deprecation")
+	@ShowcaseSource
+	private void updateFormattedValue() {
+		String sValue = valueBox.getText();
+		if (!sValue.equals("")) {
+			try {
+				Date date = new Date(sValue);
+				String formattedValue = activeFormat.format(date);
+				formattedBox.setText(formattedValue);
+				showErrorMessage(null);
+			} catch (IllegalArgumentException e) {
+				showErrorMessage(constants.cwDateTimeFormatFailedToParseInput());
+			}
+		} else {
+			formattedBox.setText("<None>");
+		}
+	}
 
-  /**
-   * Update the selected pattern based on the pattern in the list.
-   */
-  @ShowcaseSource
-  private void updatePattern() {
-    switch (patternList.getSelectedIndex()) {
-      // Date + Time
-      case 0:
-        activeFormat = DateTimeFormat.getFormat(
-            PredefinedFormat.DATE_TIME_FULL);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
+	/**
+	 * Update the selected pattern based on the pattern in the list.
+	 */
+	@ShowcaseSource
+	private void updatePattern() {
+		switch (patternList.getSelectedIndex()) {
+		// Date + Time
+		case 0:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
 
-      case 1:
-        activeFormat = DateTimeFormat.getFormat(
-            PredefinedFormat.DATE_TIME_LONG);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
-      case 2:
-        activeFormat = DateTimeFormat.getFormat(
-            PredefinedFormat.DATE_TIME_MEDIUM);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
-      case 3:
-        activeFormat = DateTimeFormat.getFormat(
-            PredefinedFormat.DATE_TIME_SHORT);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
+		case 1:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_LONG);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
+		case 2:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
+		case 3:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_SHORT);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
 
-      // Date only
-      case 4:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_FULL);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
+		// Date only
+		case 4:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_FULL);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
 
-      case 5:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
-      case 6:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
-      case 7:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
+		case 5:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
+		case 6:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
+		case 7:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
 
-      // Time only
-      case 8:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_FULL);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
+		// Time only
+		case 8:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_FULL);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
 
-      case 9:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_LONG);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
-      case 10:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_MEDIUM);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
-      case 11:
-        activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_SHORT);
-        patternBox.setText(activeFormat.getPattern());
-        patternBox.setEnabled(false);
-        break;
+		case 9:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_LONG);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
+		case 10:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_MEDIUM);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
+		case 11:
+			activeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_SHORT);
+			patternBox.setText(activeFormat.getPattern());
+			patternBox.setEnabled(false);
+			break;
 
-      // Custom
-      case 12:
-        patternBox.setEnabled(true);
-        String pattern = patternBox.getText();
-        try {
-          activeFormat = DateTimeFormat.getFormat(pattern);
-        } catch (IllegalArgumentException e) {
-          showErrorMessage(constants.cwDateTimeFormatInvalidPattern());
-          return;
-        }
-        break;
-    }
+		// Custom
+		case 12:
+			patternBox.setEnabled(true);
+			String pattern = patternBox.getText();
+			try {
+				activeFormat = DateTimeFormat.getFormat(pattern);
+			} catch (IllegalArgumentException e) {
+				showErrorMessage(constants.cwDateTimeFormatInvalidPattern());
+				return;
+			}
+			break;
+		}
 
-    // Update the formatted value
-    updateFormattedValue();
-  }
+		// Update the formatted value
+		updateFormattedValue();
+	}
 }

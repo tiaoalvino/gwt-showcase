@@ -37,116 +37,112 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle({
-    ".gwt-PopupPanel", "html>body .gwt-PopupPanel", "* html .gwt-PopupPanel",
-    ".gwt-DecoratedPopupPanel", "html>body .gwt-DecoratedPopupPanel",
-    "* html .gwt-DecoratedPopupPanel"})
+@ShowcaseStyle({ ".gwt-PopupPanel", "html>body .gwt-PopupPanel", "* html .gwt-PopupPanel", ".gwt-DecoratedPopupPanel",
+		"html>body .gwt-DecoratedPopupPanel", "* html .gwt-DecoratedPopupPanel" })
 public class CwBasicPopup extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwBasicPopupClickOutsideInstructions();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwBasicPopupClickOutsideInstructions();
 
-    String cwBasicPopupDescription();
+		String cwBasicPopupDescription();
 
-    String cwBasicPopupInstructions();
+		String cwBasicPopupInstructions();
 
-    String cwBasicPopupName();
+		String cwBasicPopupName();
 
-    String cwBasicPopupShowButton();
-  }
+		String cwBasicPopupShowButton();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwBasicPopup(CwConstants constants) {
-    super(constants.cwBasicPopupName(), constants.cwBasicPopupDescription(),
-        true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwBasicPopup(CwConstants constants) {
+		super(constants.cwBasicPopupName(), constants.cwBasicPopupDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a basic popup widget
-    final DecoratedPopupPanel simplePopup = new DecoratedPopupPanel(true);
-    simplePopup.ensureDebugId("cwBasicPopup-simplePopup");
-    simplePopup.setWidth("150px");
-    simplePopup.setWidget(
-        new HTML(constants.cwBasicPopupClickOutsideInstructions()));
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a basic popup widget
+		final DecoratedPopupPanel simplePopup = new DecoratedPopupPanel(true);
+		simplePopup.ensureDebugId("cwBasicPopup-simplePopup");
+		simplePopup.setWidth("150px");
+		simplePopup.setWidget(new HTML(constants.cwBasicPopupClickOutsideInstructions()));
 
-    // Create a button to show the popup
-    Button openButton = new Button(
-        constants.cwBasicPopupShowButton(), new ClickHandler() {
-          public void onClick(ClickEvent event) {
-            // Reposition the popup relative to the button
-            Widget source = (Widget) event.getSource();
-            int left = source.getAbsoluteLeft() + 10;
-            int top = source.getAbsoluteTop() + 10;
-            simplePopup.setPopupPosition(left, top);
+		// Create a button to show the popup
+		Button openButton = new Button(constants.cwBasicPopupShowButton(), new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				// Reposition the popup relative to the button
+				Widget source = (Widget) event.getSource();
+				int left = source.getAbsoluteLeft() + 10;
+				int top = source.getAbsoluteTop() + 10;
+				simplePopup.setPopupPosition(left, top);
 
-            // Show the popup
-            simplePopup.show();
-          }
-        });
+				// Show the popup
+				simplePopup.show();
+			}
+		});
 
-    // Create a popup to show the full size image
-    Image jimmyFull = new Image(Showcase.images.jimmy());
-    final PopupPanel imagePopup = new PopupPanel(true);
-    imagePopup.setAnimationEnabled(true);
-    imagePopup.ensureDebugId("cwBasicPopup-imagePopup");
-    imagePopup.setWidget(jimmyFull);
-    jimmyFull.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        imagePopup.hide();
-      }
-    });
+		// Create a popup to show the full size image
+		Image jimmyFull = new Image(Showcase.images.jimmy());
+		final PopupPanel imagePopup = new PopupPanel(true);
+		imagePopup.setAnimationEnabled(true);
+		imagePopup.ensureDebugId("cwBasicPopup-imagePopup");
+		imagePopup.setWidget(jimmyFull);
+		jimmyFull.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				imagePopup.hide();
+			}
+		});
 
-    // Add an image thumbnail
-    Image jimmyThumb = new Image(Showcase.images.jimmyThumb());
-    jimmyThumb.ensureDebugId("cwBasicPopup-thumb");
-    jimmyThumb.addStyleName("cw-BasicPopup-thumb");
-    jimmyThumb.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        imagePopup.center();
-      }
-    });
+		// Add an image thumbnail
+		Image jimmyThumb = new Image(Showcase.images.jimmyThumb());
+		jimmyThumb.ensureDebugId("cwBasicPopup-thumb");
+		jimmyThumb.addStyleName("cw-BasicPopup-thumb");
+		jimmyThumb.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				imagePopup.center();
+			}
+		});
 
-    // Add the widgets to a panel
-    VerticalPanel vPanel = new VerticalPanel();
-    vPanel.setSpacing(5);
-    vPanel.add(openButton);
-    vPanel.add(new HTML("<br><br><br>" + constants.cwBasicPopupInstructions()));
-    vPanel.add(jimmyThumb);
+		// Add the widgets to a panel
+		VerticalPanel vPanel = new VerticalPanel();
+		vPanel.setSpacing(5);
+		vPanel.add(openButton);
+		vPanel.add(new HTML("<br><br><br>" + constants.cwBasicPopupInstructions()));
+		vPanel.add(jimmyThumb);
 
-    // Return the panel
-    return vPanel;
-  }
+		// Return the panel
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwBasicPopup.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwBasicPopup.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

@@ -30,66 +30,66 @@ import com.google.gwt.user.client.ui.Widget;
  * Example file.
  */
 public class CwVerticalPanel extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwVerticalPanelButton();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwVerticalPanelButton();
 
-    String cwVerticalPanelDescription();
+		String cwVerticalPanelDescription();
 
-    String cwVerticalPanelName();
-  }
+		String cwVerticalPanelName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwVerticalPanel(CwConstants constants) {
-    super(constants.cwVerticalPanelName(),
-        constants.cwVerticalPanelDescription(), false);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwVerticalPanel(CwConstants constants) {
+		super(constants.cwVerticalPanelName(), constants.cwVerticalPanelDescription(), false);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a Vertical Panel
-    VerticalPanel vPanel = new VerticalPanel();
-    vPanel.setSpacing(5);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a Vertical Panel
+		VerticalPanel vPanel = new VerticalPanel();
+		vPanel.setSpacing(5);
 
-    // Add some content to the panel
-    for (int i = 1; i < 10; i++) {
-      vPanel.add(new Button(constants.cwVerticalPanelButton() + " " + i));
-    }
+		// Add some content to the panel
+		for (int i = 1; i < 10; i++) {
+			vPanel.add(new Button(constants.cwVerticalPanelButton() + " " + i));
+		}
 
-    // Return the content
-    vPanel.ensureDebugId("cwVerticalPanel");
-    return vPanel;
-  }
+		// Return the content
+		vPanel.ensureDebugId("cwVerticalPanel");
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwVerticalPanel.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwVerticalPanel.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

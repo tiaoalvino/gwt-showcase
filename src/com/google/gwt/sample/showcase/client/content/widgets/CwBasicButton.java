@@ -35,80 +35,79 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @ShowcaseStyle(".gwt-Button")
 public class CwBasicButton extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwBasicButtonClickMessage();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwBasicButtonClickMessage();
 
-    String cwBasicButtonDescription();
+		String cwBasicButtonDescription();
 
-    String cwBasicButtonDisabled();
+		String cwBasicButtonDisabled();
 
-    String cwBasicButtonName();
+		String cwBasicButtonName();
 
-    String cwBasicButtonNormal();
-  }
+		String cwBasicButtonNormal();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwBasicButton(CwConstants constants) {
-    super(constants.cwBasicButtonName(), constants.cwBasicButtonDescription(),
-        true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwBasicButton(CwConstants constants) {
+		super(constants.cwBasicButtonName(), constants.cwBasicButtonDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a panel to align the widgets
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setSpacing(10);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a panel to align the widgets
+		HorizontalPanel hPanel = new HorizontalPanel();
+		hPanel.setSpacing(10);
 
-    // Add a normal button
-    Button normalButton = new Button(
-        constants.cwBasicButtonNormal(), new ClickHandler() {
-          public void onClick(ClickEvent event) {
-            Window.alert(constants.cwBasicButtonClickMessage());
-          }
-        });
-    normalButton.ensureDebugId("cwBasicButton-normal");
-    hPanel.add(normalButton);
+		// Add a normal button
+		Button normalButton = new Button(constants.cwBasicButtonNormal(), new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.alert(constants.cwBasicButtonClickMessage());
+			}
+		});
+		normalButton.ensureDebugId("cwBasicButton-normal");
+		hPanel.add(normalButton);
 
-    // Add a disabled button
-    Button disabledButton = new Button(constants.cwBasicButtonDisabled());
-    disabledButton.ensureDebugId("cwBasicButton-disabled");
-    disabledButton.setEnabled(false);
-    hPanel.add(disabledButton);
+		// Add a disabled button
+		Button disabledButton = new Button(constants.cwBasicButtonDisabled());
+		disabledButton.ensureDebugId("cwBasicButton-disabled");
+		disabledButton.setEnabled(false);
+		hPanel.add(disabledButton);
 
-    // Return the panel
-    return hPanel;
-  }
+		// Return the panel
+		return hPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwBasicButton.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwBasicButton.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

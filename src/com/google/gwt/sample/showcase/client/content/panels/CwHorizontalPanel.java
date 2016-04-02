@@ -30,66 +30,66 @@ import com.google.gwt.user.client.ui.Widget;
  * Example file.
  */
 public class CwHorizontalPanel extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwHorizontalPanelButton();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwHorizontalPanelButton();
 
-    String cwHorizontalPanelDescription();
+		String cwHorizontalPanelDescription();
 
-    String cwHorizontalPanelName();
-  }
+		String cwHorizontalPanelName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwHorizontalPanel(CwConstants constants) {
-    super(constants.cwHorizontalPanelName(),
-        constants.cwHorizontalPanelDescription(), false);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwHorizontalPanel(CwConstants constants) {
+		super(constants.cwHorizontalPanelName(), constants.cwHorizontalPanelDescription(), false);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a Horizontal Panel
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setSpacing(5);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a Horizontal Panel
+		HorizontalPanel hPanel = new HorizontalPanel();
+		hPanel.setSpacing(5);
 
-    // Add some content to the panel
-    for (int i = 1; i < 5; i++) {
-      hPanel.add(new Button(constants.cwHorizontalPanelButton() + " " + i));
-    }
+		// Add some content to the panel
+		for (int i = 1; i < 5; i++) {
+			hPanel.add(new Button(constants.cwHorizontalPanelButton() + " " + i));
+		}
 
-    // Return the content
-    hPanel.ensureDebugId("cwHorizontalPanel");
-    return hPanel;
-  }
+		// Return the content
+		hPanel.ensureDebugId("cwHorizontalPanel");
+		return hPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwHorizontalPanel.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwHorizontalPanel.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

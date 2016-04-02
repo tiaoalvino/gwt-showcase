@@ -29,62 +29,61 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle({
-    ".gwt-RichTextArea", ".hasRichTextToolbar", ".gwt-RichTextToolbar",
-    ".cw-RichText"})
+@ShowcaseStyle({ ".gwt-RichTextArea", ".hasRichTextToolbar", ".gwt-RichTextToolbar", ".cw-RichText" })
 public class CwRichText extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwRichTextDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwRichTextDescription();
 
-    String cwRichTextName();
-  }
+		String cwRichTextName();
+	}
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwRichText(CwConstants constants) {
-    super(constants.cwRichTextName(), constants.cwRichTextDescription(), true);
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwRichText(CwConstants constants) {
+		super(constants.cwRichTextName(), constants.cwRichTextDescription(), true);
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create the text area and toolbar
-    RichTextArea area = new RichTextArea();
-    area.ensureDebugId("cwRichText-area");
-    area.setSize("100%", "14em");
-    RichTextToolbar toolbar = new RichTextToolbar(area);
-    toolbar.ensureDebugId("cwRichText-toolbar");
-    toolbar.setWidth("100%");
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create the text area and toolbar
+		RichTextArea area = new RichTextArea();
+		area.ensureDebugId("cwRichText-area");
+		area.setSize("100%", "14em");
+		RichTextToolbar toolbar = new RichTextToolbar(area);
+		toolbar.ensureDebugId("cwRichText-toolbar");
+		toolbar.setWidth("100%");
 
-    // Add the components to a panel
-    Grid grid = new Grid(2, 1);
-    grid.setStyleName("cw-RichText");
-    grid.setWidget(0, 0, toolbar);
-    grid.setWidget(1, 0, area);
-    return grid;
-  }
+		// Add the components to a panel
+		Grid grid = new Grid(2, 1);
+		grid.setStyleName("cw-RichText");
+		grid.setWidget(0, 0, toolbar);
+		grid.setWidget(1, 0, area);
+		return grid;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwRichText.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwRichText.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

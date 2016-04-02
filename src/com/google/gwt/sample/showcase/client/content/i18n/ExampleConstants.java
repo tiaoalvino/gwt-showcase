@@ -23,11 +23,11 @@ import java.util.Map;
  * Internationalized constants used to demonstrate {@link Constants}.
  */
 public interface ExampleConstants extends Constants {
-  Map<String, String> colorMap();
+	Map<String, String> colorMap();
 
-  String favoriteColor();
+	String favoriteColor();
 
-  String firstName();
+	String firstName();
 
-  String lastName();
+	String lastName();
 }

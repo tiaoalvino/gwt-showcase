@@ -32,80 +32,83 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle(/* css style names */{".gwt-TextArea"})
+@ShowcaseStyle(/* css style names */{ ".gwt-TextArea" })
 public class CwBidiInput extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwBidiInputRtlAreaLabel();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwBidiInputRtlAreaLabel();
 
-    String cwBidiInputBidiAreaLabel();
+		String cwBidiInputBidiAreaLabel();
 
-    String cwBidiInputDescription();
+		String cwBidiInputDescription();
 
-    String cwBidiInputName();
-  }
+		String cwBidiInputName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwBidiInput(CwConstants constants) {
-    super(
-        constants.cwBidiInputName(), constants.cwBidiInputDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwBidiInput(CwConstants constants) {
+		super(constants.cwBidiInputName(), constants.cwBidiInputDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a panel to layout the widgets
-    VerticalPanel vpanel = new VerticalPanel();
-    vpanel.setSpacing(10);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a panel to layout the widgets
+		VerticalPanel vpanel = new VerticalPanel();
+		vpanel.setSpacing(10);
 
-    // Add a bidi-disabled TextArea
-    vpanel.add(new HTML(constants.cwBidiInputRtlAreaLabel()));
-    TextArea disabled = new TextArea();
-    disabled.setDirectionEstimator(false);
-    disabled.setDirection(Direction.RTL);
-    vpanel.add(disabled);
+		// Add a bidi-disabled TextArea
+		vpanel.add(new HTML(constants.cwBidiInputRtlAreaLabel()));
+		TextArea disabled = new TextArea();
+		disabled.setDirectionEstimator(false);
+		disabled.setDirection(Direction.RTL);
+		vpanel.add(disabled);
 
-    // Add a bidi-enabled TextArea
-    vpanel.add(new HTML(constants.cwBidiInputBidiAreaLabel()));
-    TextArea enabled = new TextArea();
-    // Since this application includes at least one RTL locale, this TextArea
-    // has automatic direction handling on by default.
-    assert enabled.getDirectionEstimator() != null;
-    enabled.setText("كم عدد حبات الرمل في الشاطئ?");
-    vpanel.add(enabled);
+		// Add a bidi-enabled TextArea
+		vpanel.add(new HTML(constants.cwBidiInputBidiAreaLabel()));
+		TextArea enabled = new TextArea();
+		// Since this application includes at least one RTL locale, this
+		// TextArea
+		// has automatic direction handling on by default.
+		assert enabled.getDirectionEstimator() != null;
+		enabled.setText("كم عدد حبات الرمل في الشاطئ?");
+		vpanel.add(enabled);
 
-    // Return the panel
-    return vpanel;
-  }
+		// Return the panel
+		return vpanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwBidiInput.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwBidiInput.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			@Override
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			@Override
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

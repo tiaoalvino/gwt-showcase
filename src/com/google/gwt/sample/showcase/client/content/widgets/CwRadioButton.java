@@ -33,93 +33,92 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @ShowcaseStyle(".gwt-RadioButton")
 public class CwRadioButton extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String[] cwRadioButtonColors();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String[] cwRadioButtonColors();
 
-    String cwRadioButtonDescription();
+		String cwRadioButtonDescription();
 
-    String cwRadioButtonName();
+		String cwRadioButtonName();
 
-    String cwRadioButtonSelectColor();
+		String cwRadioButtonSelectColor();
 
-    String cwRadioButtonSelectSport();
+		String cwRadioButtonSelectSport();
 
-    String[] cwRadioButtonSports();
-  }
+		String[] cwRadioButtonSports();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwRadioButton(CwConstants constants) {
-    super(constants.cwRadioButtonName(), constants.cwRadioButtonDescription(),
-        true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwRadioButton(CwConstants constants) {
+		super(constants.cwRadioButtonName(), constants.cwRadioButtonDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a vertical panel to align the radio buttons
-    VerticalPanel vPanel = new VerticalPanel();
-    vPanel.add(new HTML(constants.cwRadioButtonSelectColor()));
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a vertical panel to align the radio buttons
+		VerticalPanel vPanel = new VerticalPanel();
+		vPanel.add(new HTML(constants.cwRadioButtonSelectColor()));
 
-    // Add some radio buttons to a group called 'color'
-    String[] colors = constants.cwRadioButtonColors();
-    for (int i = 0; i < colors.length; i++) {
-      String color = colors[i];
-      RadioButton radioButton = new RadioButton("color", color);
-      radioButton.ensureDebugId("cwRadioButton-color-" + color);
-      if (i == 2) {
-        radioButton.setEnabled(false);
-      }
-      vPanel.add(radioButton);
-    }
+		// Add some radio buttons to a group called 'color'
+		String[] colors = constants.cwRadioButtonColors();
+		for (int i = 0; i < colors.length; i++) {
+			String color = colors[i];
+			RadioButton radioButton = new RadioButton("color", color);
+			radioButton.ensureDebugId("cwRadioButton-color-" + color);
+			if (i == 2) {
+				radioButton.setEnabled(false);
+			}
+			vPanel.add(radioButton);
+		}
 
-    // Add a new header to select your favorite sport
-    vPanel.add(new HTML("<br>" + constants.cwRadioButtonSelectSport()));
+		// Add a new header to select your favorite sport
+		vPanel.add(new HTML("<br>" + constants.cwRadioButtonSelectSport()));
 
-    // Add some radio buttons to a group called 'sport'
-    String[] sports = constants.cwRadioButtonSports();
-    for (int i = 0; i < sports.length; i++) {
-      String sport = sports[i];
-      RadioButton radioButton = new RadioButton("sport", sport);
-      radioButton.ensureDebugId(
-          "cwRadioButton-sport-" + sport.replaceAll(" ", ""));
-      if (i == 2) {
-        radioButton.setValue(true);
-      }
-      vPanel.add(radioButton);
-    }
+		// Add some radio buttons to a group called 'sport'
+		String[] sports = constants.cwRadioButtonSports();
+		for (int i = 0; i < sports.length; i++) {
+			String sport = sports[i];
+			RadioButton radioButton = new RadioButton("sport", sport);
+			radioButton.ensureDebugId("cwRadioButton-sport-" + sport.replaceAll(" ", ""));
+			if (i == 2) {
+				radioButton.setValue(true);
+			}
+			vPanel.add(radioButton);
+		}
 
-    return vPanel;
-  }
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwRadioButton.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwRadioButton.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

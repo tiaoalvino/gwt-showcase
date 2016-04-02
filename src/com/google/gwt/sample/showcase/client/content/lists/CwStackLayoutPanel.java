@@ -47,256 +47,259 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle({
-    ".gwt-DecoratedStackPanel", "html>body .gwt-DecoratedStackPanel",
-    "* html .gwt-DecoratedStackPanel", ".cw-StackPanelHeader"})
+@ShowcaseStyle({ ".gwt-DecoratedStackPanel", "html>body .gwt-DecoratedStackPanel", "* html .gwt-DecoratedStackPanel",
+		".cw-StackPanelHeader" })
 public class CwStackLayoutPanel extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String[] cwStackLayoutPanelContacts();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String[] cwStackLayoutPanelContacts();
 
-    String[] cwStackLayoutPanelContactsEmails();
+		String[] cwStackLayoutPanelContactsEmails();
 
-    String cwStackLayoutPanelContactsHeader();
+		String cwStackLayoutPanelContactsHeader();
 
-    String cwStackLayoutPanelDescription();
+		String cwStackLayoutPanelDescription();
 
-    String[] cwStackLayoutPanelFilters();
+		String[] cwStackLayoutPanelFilters();
 
-    String cwStackLayoutPanelFiltersHeader();
+		String cwStackLayoutPanelFiltersHeader();
 
-    String[] cwStackLayoutPanelMailFolders();
+		String[] cwStackLayoutPanelMailFolders();
 
-    String cwStackLayoutPanelMailHeader();
+		String cwStackLayoutPanelMailHeader();
 
-    String cwStackLayoutPanelName();
-  }
+		String cwStackLayoutPanelName();
+	}
 
-  /**
-   * Specifies the images that will be bundled for this example.
-   * 
-   * We will override the leaf image used in the tree. Instead of using a blank
-   * 16x16 image, we will use a blank 1x1 image so it does not take up any
-   * space. Each TreeItem will use its own custom image.
-   */
-  @ShowcaseSource
-  public interface Images extends Tree.Resources {
-    ImageResource contactsgroup();
+	/**
+	 * Specifies the images that will be bundled for this example.
+	 * 
+	 * We will override the leaf image used in the tree. Instead of using a
+	 * blank 16x16 image, we will use a blank 1x1 image so it does not take up
+	 * any space. Each TreeItem will use its own custom image.
+	 */
+	@ShowcaseSource
+	public interface Images extends Tree.Resources {
+		ImageResource contactsgroup();
 
-    ImageResource defaultContact();
+		ImageResource defaultContact();
 
-    ImageResource drafts();
+		ImageResource drafts();
 
-    ImageResource filtersgroup();
+		ImageResource filtersgroup();
 
-    ImageResource inbox();
+		ImageResource inbox();
 
-    ImageResource mailgroup();
+		ImageResource mailgroup();
 
-    ImageResource sent();
+		ImageResource sent();
 
-    ImageResource templates();
+		ImageResource templates();
 
-    ImageResource trash();
+		ImageResource trash();
 
-    /**
-     * Use noimage.png, which is a blank 1x1 image.
-     */
-    @Override
-    @Source("noimage.png")
-    ImageResource treeLeaf();
-  }
+		/**
+		 * Use noimage.png, which is a blank 1x1 image.
+		 */
+		@Override
+		@Source("noimage.png")
+		ImageResource treeLeaf();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   * 
-   * @param constants the constants
-   */
-  public CwStackLayoutPanel(CwConstants constants) {
-    super(constants.cwStackLayoutPanelName(), constants
-        .cwStackLayoutPanelDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 * 
+	 * @param constants
+	 *            the constants
+	 */
+	public CwStackLayoutPanel(CwConstants constants) {
+		super(constants.cwStackLayoutPanelName(), constants.cwStackLayoutPanelDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Get the images.
-    Images images = (Images) GWT.create(Images.class);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Get the images.
+		Images images = (Images) GWT.create(Images.class);
 
-    // Create a new stack layout panel.
-    StackLayoutPanel stackPanel = new StackLayoutPanel(Unit.EM);
-    stackPanel.setPixelSize(200, 400);
+		// Create a new stack layout panel.
+		StackLayoutPanel stackPanel = new StackLayoutPanel(Unit.EM);
+		stackPanel.setPixelSize(200, 400);
 
-    // Add the Mail folders.
-    Widget mailHeader = createHeaderWidget(
-        constants.cwStackLayoutPanelMailHeader(), images.mailgroup());
-    stackPanel.add(createMailItem(images), mailHeader, 4);
+		// Add the Mail folders.
+		Widget mailHeader = createHeaderWidget(constants.cwStackLayoutPanelMailHeader(), images.mailgroup());
+		stackPanel.add(createMailItem(images), mailHeader, 4);
 
-    // Add a list of filters.
-    Widget filtersHeader = createHeaderWidget(
-        constants.cwStackLayoutPanelFiltersHeader(), images.filtersgroup());
-    stackPanel.add(createFiltersItem(), filtersHeader, 4);
+		// Add a list of filters.
+		Widget filtersHeader = createHeaderWidget(constants.cwStackLayoutPanelFiltersHeader(), images.filtersgroup());
+		stackPanel.add(createFiltersItem(), filtersHeader, 4);
 
-    // Add a list of contacts.
-    Widget contactsHeader = createHeaderWidget(
-        constants.cwStackLayoutPanelContactsHeader(), images.contactsgroup());
-    stackPanel.add(createContactsItem(images), contactsHeader, 4);
+		// Add a list of contacts.
+		Widget contactsHeader = createHeaderWidget(constants.cwStackLayoutPanelContactsHeader(),
+				images.contactsgroup());
+		stackPanel.add(createContactsItem(images), contactsHeader, 4);
 
-    // Return the stack panel.
-    stackPanel.ensureDebugId("cwStackLayoutPanel");
-    return stackPanel;
-  }
+		// Return the stack panel.
+		stackPanel.ensureDebugId("cwStackLayoutPanel");
+		return stackPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwStackLayoutPanel.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwStackLayoutPanel.class, new RunAsyncCallback() {
 
-      @Override
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			@Override
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      @Override
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			@Override
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Add a {@link TreeItem} to a root item.
-   * 
-   * @param root the root {@link TreeItem}
-   * @param image the icon for the new child item
-   * @param label the label for the child icon
-   */
-  @ShowcaseSource
-  private void addItem(TreeItem root, ImageResource image, String label) {
-    SafeHtmlBuilder sb = new SafeHtmlBuilder();
-    sb.append(SafeHtmlUtils.fromTrustedString(AbstractImagePrototype.create(
-        image).getHTML()));
-    sb.appendEscaped(" ").appendEscaped(label);
-    root.addItem(sb.toSafeHtml());
-  }
+	/**
+	 * Add a {@link TreeItem} to a root item.
+	 * 
+	 * @param root
+	 *            the root {@link TreeItem}
+	 * @param image
+	 *            the icon for the new child item
+	 * @param label
+	 *            the label for the child icon
+	 */
+	@ShowcaseSource
+	private void addItem(TreeItem root, ImageResource image, String label) {
+		SafeHtmlBuilder sb = new SafeHtmlBuilder();
+		sb.append(SafeHtmlUtils.fromTrustedString(AbstractImagePrototype.create(image).getHTML()));
+		sb.appendEscaped(" ").appendEscaped(label);
+		root.addItem(sb.toSafeHtml());
+	}
 
-  /**
-   * Create the list of Contacts.
-   * 
-   * @param images the {@link Images} used in the Contacts
-   * @return the list of contacts
-   */
-  @ShowcaseSource
-  private Widget createContactsItem(Images images) {
-    // Create a popup to show the contact info when a contact is clicked
-    HorizontalPanel contactPopupContainer = new HorizontalPanel();
-    contactPopupContainer.setSpacing(5);
-    contactPopupContainer.add(new Image(images.defaultContact()));
-    final HTML contactInfo = new HTML();
-    contactPopupContainer.add(contactInfo);
-    final PopupPanel contactPopup = new PopupPanel(true, false);
-    contactPopup.setWidget(contactPopupContainer);
+	/**
+	 * Create the list of Contacts.
+	 * 
+	 * @param images
+	 *            the {@link Images} used in the Contacts
+	 * @return the list of contacts
+	 */
+	@ShowcaseSource
+	private Widget createContactsItem(Images images) {
+		// Create a popup to show the contact info when a contact is clicked
+		HorizontalPanel contactPopupContainer = new HorizontalPanel();
+		contactPopupContainer.setSpacing(5);
+		contactPopupContainer.add(new Image(images.defaultContact()));
+		final HTML contactInfo = new HTML();
+		contactPopupContainer.add(contactInfo);
+		final PopupPanel contactPopup = new PopupPanel(true, false);
+		contactPopup.setWidget(contactPopupContainer);
 
-    // Create the list of contacts
-    VerticalPanel contactsPanel = new VerticalPanel();
-    contactsPanel.setSpacing(4);
-    String[] contactNames = constants.cwStackLayoutPanelContacts();
-    String[] contactEmails = constants.cwStackLayoutPanelContactsEmails();
-    for (int i = 0; i < contactNames.length; i++) {
-      final String contactName = contactNames[i];
-      final String contactEmail = contactEmails[i];
-      final Anchor contactLink = new Anchor(contactName);
-      contactsPanel.add(contactLink);
+		// Create the list of contacts
+		VerticalPanel contactsPanel = new VerticalPanel();
+		contactsPanel.setSpacing(4);
+		String[] contactNames = constants.cwStackLayoutPanelContacts();
+		String[] contactEmails = constants.cwStackLayoutPanelContactsEmails();
+		for (int i = 0; i < contactNames.length; i++) {
+			final String contactName = contactNames[i];
+			final String contactEmail = contactEmails[i];
+			final Anchor contactLink = new Anchor(contactName);
+			contactsPanel.add(contactLink);
 
-      // Open the contact info popup when the user clicks a contact
-      contactLink.addClickHandler(new ClickHandler() {
-        @Override
-        public void onClick(ClickEvent event) {
-          // Set the info about the contact
-          SafeHtmlBuilder sb = new SafeHtmlBuilder();
-          sb.appendEscaped(contactName);
-          sb.appendHtmlConstant("<br><i>");
-          sb.appendEscaped(contactEmail);
-          sb.appendHtmlConstant("</i>");
-          contactInfo.setHTML(sb.toSafeHtml());
+			// Open the contact info popup when the user clicks a contact
+			contactLink.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					// Set the info about the contact
+					SafeHtmlBuilder sb = new SafeHtmlBuilder();
+					sb.appendEscaped(contactName);
+					sb.appendHtmlConstant("<br><i>");
+					sb.appendEscaped(contactEmail);
+					sb.appendHtmlConstant("</i>");
+					contactInfo.setHTML(sb.toSafeHtml());
 
-          // Show the popup of contact info
-          int left = contactLink.getAbsoluteLeft() + 14;
-          int top = contactLink.getAbsoluteTop() + 14;
-          contactPopup.setPopupPosition(left, top);
-          contactPopup.show();
-        }
-      });
-    }
-    return new SimplePanel(contactsPanel);
-  }
+					// Show the popup of contact info
+					int left = contactLink.getAbsoluteLeft() + 14;
+					int top = contactLink.getAbsoluteTop() + 14;
+					contactPopup.setPopupPosition(left, top);
+					contactPopup.show();
+				}
+			});
+		}
+		return new SimplePanel(contactsPanel);
+	}
 
-  /**
-   * Create the list of filters for the Filters item.
-   * 
-   * @return the list of filters
-   */
-  @ShowcaseSource
-  private Widget createFiltersItem() {
-    VerticalPanel filtersPanel = new VerticalPanel();
-    filtersPanel.setSpacing(4);
-    for (String filter : constants.cwStackLayoutPanelFilters()) {
-      filtersPanel.add(new CheckBox(filter));
-    }
-    return new SimplePanel(filtersPanel);
-  }
+	/**
+	 * Create the list of filters for the Filters item.
+	 * 
+	 * @return the list of filters
+	 */
+	@ShowcaseSource
+	private Widget createFiltersItem() {
+		VerticalPanel filtersPanel = new VerticalPanel();
+		filtersPanel.setSpacing(4);
+		for (String filter : constants.cwStackLayoutPanelFilters()) {
+			filtersPanel.add(new CheckBox(filter));
+		}
+		return new SimplePanel(filtersPanel);
+	}
 
-  /**
-   * Create a widget to display in the header that includes an image and some
-   * text.
-   * 
-   * @param text the header text
-   * @param image the {@link ImageResource} to add next to the header
-   * @return the header widget
-   */
-  @ShowcaseSource
-  private Widget createHeaderWidget(String text, ImageResource image) {
-    // Add the image and text to a horizontal panel
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setHeight("100%");
-    hPanel.setSpacing(0);
-    hPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-    hPanel.add(new Image(image));
-    HTML headerText = new HTML(text);
-    headerText.setStyleName("cw-StackPanelHeader");
-    hPanel.add(headerText);
-    return new SimplePanel(hPanel);
-  }
+	/**
+	 * Create a widget to display in the header that includes an image and some
+	 * text.
+	 * 
+	 * @param text
+	 *            the header text
+	 * @param image
+	 *            the {@link ImageResource} to add next to the header
+	 * @return the header widget
+	 */
+	@ShowcaseSource
+	private Widget createHeaderWidget(String text, ImageResource image) {
+		// Add the image and text to a horizontal panel
+		HorizontalPanel hPanel = new HorizontalPanel();
+		hPanel.setHeight("100%");
+		hPanel.setSpacing(0);
+		hPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		hPanel.add(new Image(image));
+		HTML headerText = new HTML(text);
+		headerText.setStyleName("cw-StackPanelHeader");
+		hPanel.add(headerText);
+		return new SimplePanel(hPanel);
+	}
 
-  /**
-   * Create the {@link Tree} of Mail options.
-   * 
-   * @param images the {@link Images} used in the Mail options
-   * @return the {@link Tree} of mail options
-   */
-  @ShowcaseSource
-  private Widget createMailItem(Images images) {
-    Tree mailPanel = new Tree(images);
-    TreeItem mailPanelRoot = mailPanel.addTextItem("foo@example.com");
-    String[] mailFolders = constants.cwStackLayoutPanelMailFolders();
-    addItem(mailPanelRoot, images.inbox(), mailFolders[0]);
-    addItem(mailPanelRoot, images.drafts(), mailFolders[1]);
-    addItem(mailPanelRoot, images.templates(), mailFolders[2]);
-    addItem(mailPanelRoot, images.sent(), mailFolders[3]);
-    addItem(mailPanelRoot, images.trash(), mailFolders[4]);
-    mailPanelRoot.setState(true);
-    return mailPanel;
-  }
+	/**
+	 * Create the {@link Tree} of Mail options.
+	 * 
+	 * @param images
+	 *            the {@link Images} used in the Mail options
+	 * @return the {@link Tree} of mail options
+	 */
+	@ShowcaseSource
+	private Widget createMailItem(Images images) {
+		Tree mailPanel = new Tree(images);
+		TreeItem mailPanelRoot = mailPanel.addTextItem("foo@example.com");
+		String[] mailFolders = constants.cwStackLayoutPanelMailFolders();
+		addItem(mailPanelRoot, images.inbox(), mailFolders[0]);
+		addItem(mailPanelRoot, images.drafts(), mailFolders[1]);
+		addItem(mailPanelRoot, images.templates(), mailFolders[2]);
+		addItem(mailPanelRoot, images.sent(), mailFolders[3]);
+		addItem(mailPanelRoot, images.trash(), mailFolders[4]);
+		mailPanelRoot.setState(true);
+		return mailPanel;
+	}
 }

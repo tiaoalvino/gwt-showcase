@@ -32,67 +32,67 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @ShowcaseStyle(".cw-FlowPanel-checkBox")
 public class CwFlowPanel extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwFlowPanelDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwFlowPanelDescription();
 
-    String cwFlowPanelItem();
+		String cwFlowPanelItem();
 
-    String cwFlowPanelName();
-  }
+		String cwFlowPanelName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwFlowPanel(CwConstants constants) {
-    super(
-        constants.cwFlowPanelName(), constants.cwFlowPanelDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwFlowPanel(CwConstants constants) {
+		super(constants.cwFlowPanelName(), constants.cwFlowPanelDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a Flow Panel
-    FlowPanel flowPanel = new FlowPanel();
-    flowPanel.ensureDebugId("cwFlowPanel");
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a Flow Panel
+		FlowPanel flowPanel = new FlowPanel();
+		flowPanel.ensureDebugId("cwFlowPanel");
 
-    // Add some content to the panel
-    for (int i = 0; i < 30; i++) {
-      CheckBox checkbox = new CheckBox(constants.cwFlowPanelItem() + " " + i);
-      checkbox.addStyleName("cw-FlowPanel-checkBox");
-      flowPanel.add(checkbox);
-    }
+		// Add some content to the panel
+		for (int i = 0; i < 30; i++) {
+			CheckBox checkbox = new CheckBox(constants.cwFlowPanelItem() + " " + i);
+			checkbox.addStyleName("cw-FlowPanel-checkBox");
+			flowPanel.add(checkbox);
+		}
 
-    // Return the content
-    return flowPanel;
-  }
+		// Return the content
+		return flowPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwFlowPanel.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwFlowPanel.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

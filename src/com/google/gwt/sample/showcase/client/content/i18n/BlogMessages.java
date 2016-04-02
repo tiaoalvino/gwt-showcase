@@ -21,6 +21,5 @@ import com.google.gwt.i18n.client.Messages;
  * Internationalized messages.
  */
 public interface BlogMessages extends Messages {
-  String userComment(String username, String numberOfPosts,
-      String commentedPostName);
+	String userComment(String username, String numberOfPosts, String commentedPostName);
 }

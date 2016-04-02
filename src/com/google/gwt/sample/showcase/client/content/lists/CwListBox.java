@@ -36,131 +36,134 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @ShowcaseStyle(".gwt-ListBox")
 public class CwListBox extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String[] cwListBoxCars();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String[] cwListBoxCars();
 
-    String[] cwListBoxCategories();
+		String[] cwListBoxCategories();
 
-    String cwListBoxDescription();
+		String cwListBoxDescription();
 
-    String cwListBoxName();
+		String cwListBoxName();
 
-    String cwListBoxSelectAll();
+		String cwListBoxSelectAll();
 
-    String cwListBoxSelectCategory();
+		String cwListBoxSelectCategory();
 
-    String[] cwListBoxSports();
+		String[] cwListBoxSports();
 
-    String[] cwListBoxVacations();
-  }
+		String[] cwListBoxVacations();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwListBox(CwConstants constants) {
-    super(constants.cwListBoxName(), constants.cwListBoxDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwListBox(CwConstants constants) {
+		super(constants.cwListBoxName(), constants.cwListBoxDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a panel to align the Widgets
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setSpacing(20);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a panel to align the Widgets
+		HorizontalPanel hPanel = new HorizontalPanel();
+		hPanel.setSpacing(20);
 
-    // Add a drop box with the list types
-    final ListBox dropBox = new ListBox(false);
-    String[] listTypes = constants.cwListBoxCategories();
-    for (int i = 0; i < listTypes.length; i++) {
-      dropBox.addItem(listTypes[i]);
-    }
-    dropBox.ensureDebugId("cwListBox-dropBox");
-    VerticalPanel dropBoxPanel = new VerticalPanel();
-    dropBoxPanel.setSpacing(4);
-    dropBoxPanel.add(new HTML(constants.cwListBoxSelectCategory()));
-    dropBoxPanel.add(dropBox);
-    hPanel.add(dropBoxPanel);
+		// Add a drop box with the list types
+		final ListBox dropBox = new ListBox(false);
+		String[] listTypes = constants.cwListBoxCategories();
+		for (int i = 0; i < listTypes.length; i++) {
+			dropBox.addItem(listTypes[i]);
+		}
+		dropBox.ensureDebugId("cwListBox-dropBox");
+		VerticalPanel dropBoxPanel = new VerticalPanel();
+		dropBoxPanel.setSpacing(4);
+		dropBoxPanel.add(new HTML(constants.cwListBoxSelectCategory()));
+		dropBoxPanel.add(dropBox);
+		hPanel.add(dropBoxPanel);
 
-    // Add a list box with multiple selection enabled
-    final ListBox multiBox = new ListBox(true);
-    multiBox.ensureDebugId("cwListBox-multiBox");
-    multiBox.setWidth("11em");
-    multiBox.setVisibleItemCount(10);
-    VerticalPanel multiBoxPanel = new VerticalPanel();
-    multiBoxPanel.setSpacing(4);
-    multiBoxPanel.add(new HTML(constants.cwListBoxSelectAll()));
-    multiBoxPanel.add(multiBox);
-    hPanel.add(multiBoxPanel);
+		// Add a list box with multiple selection enabled
+		final ListBox multiBox = new ListBox(true);
+		multiBox.ensureDebugId("cwListBox-multiBox");
+		multiBox.setWidth("11em");
+		multiBox.setVisibleItemCount(10);
+		VerticalPanel multiBoxPanel = new VerticalPanel();
+		multiBoxPanel.setSpacing(4);
+		multiBoxPanel.add(new HTML(constants.cwListBoxSelectAll()));
+		multiBoxPanel.add(multiBox);
+		hPanel.add(multiBoxPanel);
 
-    // Add a handler to handle drop box events
-    dropBox.addChangeHandler(new ChangeHandler() {
-      public void onChange(ChangeEvent event) {
-        showCategory(multiBox, dropBox.getSelectedIndex());
-        multiBox.ensureDebugId("cwListBox-multiBox");
-      }
-    });
+		// Add a handler to handle drop box events
+		dropBox.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				showCategory(multiBox, dropBox.getSelectedIndex());
+				multiBox.ensureDebugId("cwListBox-multiBox");
+			}
+		});
 
-    // Show default category
-    showCategory(multiBox, 0);
-    multiBox.ensureDebugId("cwListBox-multiBox");
+		// Show default category
+		showCategory(multiBox, 0);
+		multiBox.ensureDebugId("cwListBox-multiBox");
 
-    // Return the panel
-    return hPanel;
-  }
+		// Return the panel
+		return hPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwListBox.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwListBox.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Display the options for a given category in the list box.
-   *
-   * @param listBox the ListBox to add the options to
-   * @param category the category index
-   */
-  @ShowcaseSource
-  private void showCategory(ListBox listBox, int category) {
-    listBox.clear();
-    String[] listData = null;
-    switch (category) {
-      case 0:
-        listData = constants.cwListBoxCars();
-        break;
-      case 1:
-        listData = constants.cwListBoxSports();
-        break;
-      case 2:
-        listData = constants.cwListBoxVacations();
-        break;
-    }
-    for (int i = 0; i < listData.length; i++) {
-      listBox.addItem(listData[i]);
-    }
-  }
+	/**
+	 * Display the options for a given category in the list box.
+	 *
+	 * @param listBox
+	 *            the ListBox to add the options to
+	 * @param category
+	 *            the category index
+	 */
+	@ShowcaseSource
+	private void showCategory(ListBox listBox, int category) {
+		listBox.clear();
+		String[] listData = null;
+		switch (category) {
+		case 0:
+			listData = constants.cwListBoxCars();
+			break;
+		case 1:
+			listData = constants.cwListBoxSports();
+			break;
+		case 2:
+			listData = constants.cwListBoxVacations();
+			break;
+		}
+		for (int i = 0; i < listData.length; i++) {
+			listBox.addItem(listData[i]);
+		}
+	}
 }

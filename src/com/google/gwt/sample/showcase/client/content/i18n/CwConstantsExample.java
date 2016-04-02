@@ -39,107 +39,107 @@ import java.util.Map;
 /**
  * Example file.
  */
-@ShowcaseRaw({"ExampleConstants.java", "ExampleConstants.properties"})
+@ShowcaseRaw({ "ExampleConstants.java", "ExampleConstants.properties" })
 public class CwConstantsExample extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwConstantsExampleDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwConstantsExampleDescription();
 
-    String cwConstantsExampleLinkText();
+		String cwConstantsExampleLinkText();
 
-    String cwConstantsExampleName();
-  }
+		String cwConstantsExampleName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwConstantsExample(CwConstants constants) {
-    super(constants.cwConstantsExampleName(),
-        constants.cwConstantsExampleDescription(), false,
-        "ExampleConstants.java", "ExampleConstants.properties");
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwConstantsExample(CwConstants constants) {
+		super(constants.cwConstantsExampleName(), constants.cwConstantsExampleDescription(), false,
+				"ExampleConstants.java", "ExampleConstants.properties");
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create the internationalized constants
-    ExampleConstants exampleConstants = GWT.create(ExampleConstants.class);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create the internationalized constants
+		ExampleConstants exampleConstants = GWT.create(ExampleConstants.class);
 
-    // Use a FlexTable to layout the content
-    FlexTable layout = new FlexTable();
-    FlexCellFormatter formatter = layout.getFlexCellFormatter();
-    layout.setCellSpacing(5);
+		// Use a FlexTable to layout the content
+		FlexTable layout = new FlexTable();
+		FlexCellFormatter formatter = layout.getFlexCellFormatter();
+		layout.setCellSpacing(5);
 
-    // Add a link to the source code of the Interface
-    final String rawFile = getSimpleName(ExampleConstants.class);
-    Anchor link = new Anchor(rawFile);
-    link.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        fireRawSourceRequest(rawFile + ".java");
-      }
-    });
-    HorizontalPanel linkPanel = new HorizontalPanel();
-    linkPanel.setSpacing(3);
-    linkPanel.add(new HTML(constants.cwConstantsExampleLinkText()));
-    linkPanel.add(link);
-    layout.setWidget(0, 0, linkPanel);
-    formatter.setColSpan(0, 0, 2);
+		// Add a link to the source code of the Interface
+		final String rawFile = getSimpleName(ExampleConstants.class);
+		Anchor link = new Anchor(rawFile);
+		link.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				fireRawSourceRequest(rawFile + ".java");
+			}
+		});
+		HorizontalPanel linkPanel = new HorizontalPanel();
+		linkPanel.setSpacing(3);
+		linkPanel.add(new HTML(constants.cwConstantsExampleLinkText()));
+		linkPanel.add(link);
+		layout.setWidget(0, 0, linkPanel);
+		formatter.setColSpan(0, 0, 2);
 
-    // Show the first name
-    TextBox firstNameBox = new TextBox();
-    firstNameBox.setText("Amelie");
-    firstNameBox.setWidth("17em");
-    layout.setHTML(1, 0, exampleConstants.firstName());
-    layout.setWidget(1, 1, firstNameBox);
+		// Show the first name
+		TextBox firstNameBox = new TextBox();
+		firstNameBox.setText("Amelie");
+		firstNameBox.setWidth("17em");
+		layout.setHTML(1, 0, exampleConstants.firstName());
+		layout.setWidget(1, 1, firstNameBox);
 
-    // Show the last name
-    TextBox lastNameBox = new TextBox();
-    lastNameBox.setText("Crutcher");
-    lastNameBox.setWidth("17em");
-    layout.setHTML(2, 0, exampleConstants.lastName());
-    layout.setWidget(2, 1, lastNameBox);
+		// Show the last name
+		TextBox lastNameBox = new TextBox();
+		lastNameBox.setText("Crutcher");
+		lastNameBox.setWidth("17em");
+		layout.setHTML(2, 0, exampleConstants.lastName());
+		layout.setWidget(2, 1, lastNameBox);
 
-    // Create a list box of favorite colors
-    ListBox colorBox = new ListBox();
-    Map<String, String> colorMap = exampleConstants.colorMap();
-    for (Map.Entry<String, String> entry : colorMap.entrySet()) {
-      String key = entry.getKey();
-      String value = entry.getValue();
-      colorBox.addItem(value, key);
-    }
-    layout.setHTML(3, 0, exampleConstants.favoriteColor());
-    layout.setWidget(3, 1, colorBox);
+		// Create a list box of favorite colors
+		ListBox colorBox = new ListBox();
+		Map<String, String> colorMap = exampleConstants.colorMap();
+		for (Map.Entry<String, String> entry : colorMap.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+			colorBox.addItem(value, key);
+		}
+		layout.setHTML(3, 0, exampleConstants.favoriteColor());
+		layout.setWidget(3, 1, colorBox);
 
-    // Return the layout Widget
-    return layout;
-  }
+		// Return the layout Widget
+		return layout;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwConstantsExample.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwConstantsExample.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

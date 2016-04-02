@@ -30,59 +30,60 @@ import com.google.gwt.user.client.ui.Widget;
  * Example file.
  */
 public class CwGrid extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwGridDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwGridDescription();
 
-    String cwGridName();
-  }
+		String cwGridName();
+	}
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwGrid(CwConstants constants) {
-    super(constants.cwGridName(), constants.cwGridDescription(), false);
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwGrid(CwConstants constants) {
+		super(constants.cwGridName(), constants.cwGridDescription(), false);
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a grid
-    Grid grid = new Grid(4, 4);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a grid
+		Grid grid = new Grid(4, 4);
 
-    // Add images to the grid
-    int numRows = grid.getRowCount();
-    int numColumns = grid.getColumnCount();
-    for (int row = 0; row < numRows; row++) {
-      for (int col = 0; col < numColumns; col++) {
-        grid.setWidget(row, col, new Image(Showcase.images.gwtLogo()));
-      }
-    }
+		// Add images to the grid
+		int numRows = grid.getRowCount();
+		int numColumns = grid.getColumnCount();
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {
+				grid.setWidget(row, col, new Image(Showcase.images.gwtLogo()));
+			}
+		}
 
-    // Return the panel
-    grid.ensureDebugId("cwGrid");
-    return grid;
-  }
+		// Return the panel
+		grid.ensureDebugId("cwGrid");
+		return grid;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwGrid.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwGrid.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

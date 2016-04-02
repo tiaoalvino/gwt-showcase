@@ -31,72 +31,74 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @ShowcaseStyle(".gwt-CheckBox")
 public class CwCheckBox extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwCheckBoxCheckAll();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwCheckBoxCheckAll();
 
-    String[] cwCheckBoxDays();
+		String[] cwCheckBoxDays();
 
-    String cwCheckBoxDescription();
+		String cwCheckBoxDescription();
 
-    String cwCheckBoxName();
-  }
+		String cwCheckBoxName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwCheckBox(CwConstants constants) {
-    super(constants.cwCheckBoxName(), constants.cwCheckBoxDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwCheckBox(CwConstants constants) {
+		super(constants.cwCheckBoxName(), constants.cwCheckBoxDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a vertical panel to align the check boxes
-    VerticalPanel vPanel = new VerticalPanel();
-    HTML label = new HTML(constants.cwCheckBoxCheckAll());
-    label.ensureDebugId("cwCheckBox-label");
-    vPanel.add(label);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a vertical panel to align the check boxes
+		VerticalPanel vPanel = new VerticalPanel();
+		HTML label = new HTML(constants.cwCheckBoxCheckAll());
+		label.ensureDebugId("cwCheckBox-label");
+		vPanel.add(label);
 
-    // Add a checkbox for each day of the week
-    String[] daysOfWeek = constants.cwCheckBoxDays();
-    for (int i = 0; i < daysOfWeek.length; i++) {
-      String day = daysOfWeek[i];
-      CheckBox checkBox = new CheckBox(day);
-      checkBox.ensureDebugId("cwCheckBox-" + day);
+		// Add a checkbox for each day of the week
+		String[] daysOfWeek = constants.cwCheckBoxDays();
+		for (int i = 0; i < daysOfWeek.length; i++) {
+			String day = daysOfWeek[i];
+			CheckBox checkBox = new CheckBox(day);
+			checkBox.ensureDebugId("cwCheckBox-" + day);
 
-      // Disable the weekends
-      if (i >= 5) {
-        checkBox.setEnabled(false);
-      }
+			// Disable the weekends
+			if (i >= 5) {
+				checkBox.setEnabled(false);
+			}
 
-      vPanel.add(checkBox);
-    }
+			vPanel.add(checkBox);
+		}
 
-    // Return the panel of checkboxes
-    return vPanel;
-  }
+		// Return the panel of checkboxes
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    /*
-     * CheckBox is the first demo loaded, so go ahead and load it synchronously.
-     */
-    callback.onSuccess(onInitialize());
-  }
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		/*
+		 * CheckBox is the first demo loaded, so go ahead and load it
+		 * synchronously.
+		 */
+		callback.onSuccess(onInitialize());
+	}
 }

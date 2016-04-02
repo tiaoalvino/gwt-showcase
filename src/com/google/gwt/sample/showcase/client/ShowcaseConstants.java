@@ -68,41 +68,38 @@ import com.google.gwt.sample.showcase.client.content.widgets.CwRadioButton;
 /**
  * Constants used throughout the showcase.
  */
-public interface ShowcaseConstants extends MenuConstants, CwCheckBox.CwConstants,
-    CwRadioButton.CwConstants, CwBasicButton.CwConstants, CwCustomButton.CwConstants,
-    CwListBox.CwConstants, CwSuggestBox.CwConstants, CwTree.CwConstants, CwMenuBar.CwConstants,
-    CwFlowPanel.CwConstants, CwDisclosurePanel.CwConstants, CwTabLayoutPanel.CwConstants,
-    CwDockPanel.CwConstants, CwHorizontalPanel.CwConstants, CwVerticalPanel.CwConstants,
-    CwBasicPopup.CwConstants, CwDialogBox.CwConstants, CwGrid.CwConstants, CwFlexTable.CwConstants,
-    CwBasicText.CwConstants, CwRichText.CwConstants, CwFileUpload.CwConstants,
-    CwAbsolutePanel.CwConstants, CwHyperlink.CwConstants, CwFrame.CwConstants,
-    CwStackPanel.CwConstants, CwCookies.CwConstants, CwNumberFormat.CwConstants,
-    CwBidiInput.CwConstants, CwBidiFormatting.CwConstants, CwDateTimeFormat.CwConstants,
-    CwMessagesExample.CwConstants, CwConstantsExample.CwConstants,
-    CwConstantsWithLookupExample.CwConstants, CwDictionaryExample.CwConstants,
-    CwDecoratorPanel.CwConstants, CwAnimation.CwConstants, CwDatePicker.CwConstants,
-    CwPluralFormsExample.CwConstants, CwCellList.CwConstants, CwCellTable.CwConstants,
-    CwDataGrid.CwConstants, CwCellTree.CwConstants, CwCellBrowser.CwConstants,
-    CwCellValidation.CwConstants, CwCellSampler.CwConstants, CwSplitLayoutPanel.CwConstants,
-    CwStackLayoutPanel.CwConstants, CwCustomDataGrid.CwConstants  {
+public interface ShowcaseConstants extends MenuConstants, CwCheckBox.CwConstants, CwRadioButton.CwConstants,
+		CwBasicButton.CwConstants, CwCustomButton.CwConstants, CwListBox.CwConstants, CwSuggestBox.CwConstants,
+		CwTree.CwConstants, CwMenuBar.CwConstants, CwFlowPanel.CwConstants, CwDisclosurePanel.CwConstants,
+		CwTabLayoutPanel.CwConstants, CwDockPanel.CwConstants, CwHorizontalPanel.CwConstants,
+		CwVerticalPanel.CwConstants, CwBasicPopup.CwConstants, CwDialogBox.CwConstants, CwGrid.CwConstants,
+		CwFlexTable.CwConstants, CwBasicText.CwConstants, CwRichText.CwConstants, CwFileUpload.CwConstants,
+		CwAbsolutePanel.CwConstants, CwHyperlink.CwConstants, CwFrame.CwConstants, CwStackPanel.CwConstants,
+		CwCookies.CwConstants, CwNumberFormat.CwConstants, CwBidiInput.CwConstants, CwBidiFormatting.CwConstants,
+		CwDateTimeFormat.CwConstants, CwMessagesExample.CwConstants, CwConstantsExample.CwConstants,
+		CwConstantsWithLookupExample.CwConstants, CwDictionaryExample.CwConstants, CwDecoratorPanel.CwConstants,
+		CwAnimation.CwConstants, CwDatePicker.CwConstants, CwPluralFormsExample.CwConstants, CwCellList.CwConstants,
+		CwCellTable.CwConstants, CwDataGrid.CwConstants, CwCellTree.CwConstants, CwCellBrowser.CwConstants,
+		CwCellValidation.CwConstants, CwCellSampler.CwConstants, CwSplitLayoutPanel.CwConstants,
+		CwStackLayoutPanel.CwConstants, CwCustomDataGrid.CwConstants {
 
-  /**
-   * The path to source code for examples, raw files, and style definitions.
-   */
-  String DST_SOURCE = "gwtShowcaseSource/";
+	/**
+	 * The path to source code for examples, raw files, and style definitions.
+	 */
+	String DST_SOURCE = "gwtShowcaseSource/";
 
-  /**
-   * The destination folder for parsed source code from Showcase examples.
-   */
-  String DST_SOURCE_EXAMPLE = DST_SOURCE + "java/";
+	/**
+	 * The destination folder for parsed source code from Showcase examples.
+	 */
+	String DST_SOURCE_EXAMPLE = DST_SOURCE + "java/";
 
-  /**
-   * The destination folder for raw files that are included in entirety.
-   */
-  String DST_SOURCE_RAW = DST_SOURCE + "raw/";
+	/**
+	 * The destination folder for raw files that are included in entirety.
+	 */
+	String DST_SOURCE_RAW = DST_SOURCE + "raw/";
 
-  /**
-   * The destination folder for parsed CSS styles used in Showcase examples.
-   */
-  String DST_SOURCE_STYLE = DST_SOURCE + "css/";
+	/**
+	 * The destination folder for parsed CSS styles used in Showcase examples.
+	 */
+	String DST_SOURCE_STYLE = DST_SOURCE + "css/";
 }

@@ -38,90 +38,91 @@ import com.google.gwt.user.client.ui.Widget;
  * Example file.
  */
 public class CwFrame extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwFrameDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwFrameDescription();
 
-    String cwFrameName();
+		String cwFrameName();
 
-    String cwFrameSetLocation();
-  }
+		String cwFrameSetLocation();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwFrame(CwConstants constants) {
-    super(constants.cwFrameName(), constants.cwFrameDescription(), false);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwFrame(CwConstants constants) {
+		super(constants.cwFrameName(), constants.cwFrameDescription(), false);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a new frame
-    String url = GWT.getModuleBaseURL();
-    final Frame frame = new Frame(url);
-    frame.setSize("700px", "300px");
-    frame.ensureDebugId("cwFrame");
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a new frame
+		String url = GWT.getModuleBaseURL();
+		final Frame frame = new Frame(url);
+		frame.setSize("700px", "300px");
+		frame.ensureDebugId("cwFrame");
 
-    // Create a form to set the location of the frame
-    final TextBox locationBox = new TextBox();
-    locationBox.setText(url);
-    Button setLocationButton = new Button(constants.cwFrameSetLocation());
-    HorizontalPanel optionsPanel = new HorizontalPanel();
-    optionsPanel.setSpacing(8);
-    optionsPanel.add(locationBox);
-    optionsPanel.add(setLocationButton);
+		// Create a form to set the location of the frame
+		final TextBox locationBox = new TextBox();
+		locationBox.setText(url);
+		Button setLocationButton = new Button(constants.cwFrameSetLocation());
+		HorizontalPanel optionsPanel = new HorizontalPanel();
+		optionsPanel.setSpacing(8);
+		optionsPanel.add(locationBox);
+		optionsPanel.add(setLocationButton);
 
-    // Change the location when the user clicks the button
-    setLocationButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        frame.setUrl(locationBox.getText());
-      }
-    });
+		// Change the location when the user clicks the button
+		setLocationButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				frame.setUrl(locationBox.getText());
+			}
+		});
 
-    // Change the location when the user presses enter
-    locationBox.addKeyDownHandler(new KeyDownHandler() {
-      public void onKeyDown(KeyDownEvent event) {
-        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-          frame.setUrl(locationBox.getText());
-        }
-      }
+		// Change the location when the user presses enter
+		locationBox.addKeyDownHandler(new KeyDownHandler() {
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					frame.setUrl(locationBox.getText());
+				}
+			}
 
-    });
+		});
 
-    // Add everything to a panel and return it
-    VerticalPanel vPanel = new VerticalPanel();
-    vPanel.add(optionsPanel);
-    vPanel.add(frame);
-    return vPanel;
-  }
+		// Add everything to a panel and return it
+		VerticalPanel vPanel = new VerticalPanel();
+		vPanel.add(optionsPanel);
+		vPanel.add(frame);
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwFrame.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwFrame.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

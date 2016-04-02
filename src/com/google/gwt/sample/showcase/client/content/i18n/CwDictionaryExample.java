@@ -37,92 +37,90 @@ import java.util.Set;
  */
 @ShowcaseStyle(".cw-DictionaryExample")
 public class CwDictionaryExample extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwDictionaryExampleDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwDictionaryExampleDescription();
 
-    String cwDictionaryExampleLinkText();
+		String cwDictionaryExampleLinkText();
 
-    String cwDictionaryExampleName();
-  }
+		String cwDictionaryExampleName();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwDictionaryExample(CwConstants constants) {
-    super(constants.cwDictionaryExampleName(),
-        constants.cwDictionaryExampleDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwDictionaryExample(CwConstants constants) {
+		super(constants.cwDictionaryExampleName(), constants.cwDictionaryExampleDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a vertical panel to layout the contents
-    VerticalPanel layout = new VerticalPanel();
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a vertical panel to layout the contents
+		VerticalPanel layout = new VerticalPanel();
 
-    // Show the HTML variable that defines the dictionary
-    HTML source = new HTML(
-        "<pre>var userInfo = {\n" + "&nbsp;&nbsp;name: \"Amelie Crutcher\",\n"
-            + "&nbsp;&nbsp;timeZone: \"EST\",\n"
-            + "&nbsp;&nbsp;userID: \"123\",\n"
-            + "&nbsp;&nbsp;lastLogOn: \"2/2/2006\"\n" + "};</pre>\n");
-    source.getElement().setDir("ltr");
-    source.getElement().getStyle().setProperty("textAlign", "left");
-    layout.add(new HTML(constants.cwDictionaryExampleLinkText()));
-    layout.add(source);
+		// Show the HTML variable that defines the dictionary
+		HTML source = new HTML("<pre>var userInfo = {\n" + "&nbsp;&nbsp;name: \"Amelie Crutcher\",\n"
+				+ "&nbsp;&nbsp;timeZone: \"EST\",\n" + "&nbsp;&nbsp;userID: \"123\",\n"
+				+ "&nbsp;&nbsp;lastLogOn: \"2/2/2006\"\n" + "};</pre>\n");
+		source.getElement().setDir("ltr");
+		source.getElement().getStyle().setProperty("textAlign", "left");
+		layout.add(new HTML(constants.cwDictionaryExampleLinkText()));
+		layout.add(source);
 
-    // Create the Dictionary of data
-    FlexTable userInfoGrid = new FlexTable();
-    CellFormatter formatter = userInfoGrid.getCellFormatter();
-    Dictionary userInfo = Dictionary.getDictionary("userInfo");
-    Set<String> keySet = userInfo.keySet();
-    int columnCount = 0;
-    for (String key : keySet) {
-      // Get the value from the set
-      String value = userInfo.get(key);
+		// Create the Dictionary of data
+		FlexTable userInfoGrid = new FlexTable();
+		CellFormatter formatter = userInfoGrid.getCellFormatter();
+		Dictionary userInfo = Dictionary.getDictionary("userInfo");
+		Set<String> keySet = userInfo.keySet();
+		int columnCount = 0;
+		for (String key : keySet) {
+			// Get the value from the set
+			String value = userInfo.get(key);
 
-      // Add a column with the data
-      userInfoGrid.setHTML(0, columnCount, key);
-      formatter.addStyleName(0, columnCount, "cw-DictionaryExample-header");
-      userInfoGrid.setHTML(1, columnCount, value);
-      formatter.addStyleName(1, columnCount, "cw-DictionaryExample-data");
+			// Add a column with the data
+			userInfoGrid.setHTML(0, columnCount, key);
+			formatter.addStyleName(0, columnCount, "cw-DictionaryExample-header");
+			userInfoGrid.setHTML(1, columnCount, value);
+			formatter.addStyleName(1, columnCount, "cw-DictionaryExample-data");
 
-      // Go to the next column
-      columnCount++;
-    }
-    layout.add(new HTML("<br><br>"));
-    layout.add(userInfoGrid);
+			// Go to the next column
+			columnCount++;
+		}
+		layout.add(new HTML("<br><br>"));
+		layout.add(userInfoGrid);
 
-    // Return the layout Widget
-    return layout;
-  }
+		// Return the layout Widget
+		return layout;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwDictionaryExample.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwDictionaryExample.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

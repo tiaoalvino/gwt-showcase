@@ -40,148 +40,147 @@ import java.util.MissingResourceException;
 /**
  * Example file.
  */
-@ShowcaseRaw({"ColorConstants.java", "ColorConstants.properties"})
+@ShowcaseRaw({ "ColorConstants.java", "ColorConstants.properties" })
 public class CwConstantsWithLookupExample extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwConstantsWithLookupExampleDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwConstantsWithLookupExampleDescription();
 
-    String cwConstantsWithLookupExampleLinkText();
+		String cwConstantsWithLookupExampleLinkText();
 
-    String cwConstantsWithLookupExampleMethodName();
+		String cwConstantsWithLookupExampleMethodName();
 
-    String cwConstantsWithLookupExampleName();
+		String cwConstantsWithLookupExampleName();
 
-    String cwConstantsWithLookupExampleNoInput();
+		String cwConstantsWithLookupExampleNoInput();
 
-    String cwConstantsWithLookupExampleNoMatches();
+		String cwConstantsWithLookupExampleNoMatches();
 
-    String cwConstantsWithLookupExampleResults();
-  }
+		String cwConstantsWithLookupExampleResults();
+	}
 
-  /**
-   * A {@link TextBox} where the user can select a color to lookup.
-   */
-  @ShowcaseData
-  private TextBox colorBox = null;
+	/**
+	 * A {@link TextBox} where the user can select a color to lookup.
+	 */
+	@ShowcaseData
+	private TextBox colorBox = null;
 
-  /**
-   * The {@link ColorConstants} that map colors to values.
-   */
-  private ColorConstants colorConstants = null;
+	/**
+	 * The {@link ColorConstants} that map colors to values.
+	 */
+	private ColorConstants colorConstants = null;
 
-  /**
-   * A {@link TextBox} where the results of the lookup are displayed.
-   */
-  @ShowcaseData
-  private TextBox colorResultsBox = null;
+	/**
+	 * A {@link TextBox} where the results of the lookup are displayed.
+	 */
+	@ShowcaseData
+	private TextBox colorResultsBox = null;
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwConstantsWithLookupExample(CwConstants constants) {
-    super(constants.cwConstantsWithLookupExampleName(),
-        constants.cwConstantsWithLookupExampleDescription(), false,
-        "ColorConstants.java", "ColorConstants.properties");
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwConstantsWithLookupExample(CwConstants constants) {
+		super(constants.cwConstantsWithLookupExampleName(), constants.cwConstantsWithLookupExampleDescription(), false,
+				"ColorConstants.java", "ColorConstants.properties");
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create the internationalized constants
-    colorConstants = GWT.create(ColorConstants.class);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create the internationalized constants
+		colorConstants = GWT.create(ColorConstants.class);
 
-    // Use a FlexTable to layout the content
-    FlexTable layout = new FlexTable();
-    FlexCellFormatter formatter = layout.getFlexCellFormatter();
-    layout.setCellSpacing(5);
+		// Use a FlexTable to layout the content
+		FlexTable layout = new FlexTable();
+		FlexCellFormatter formatter = layout.getFlexCellFormatter();
+		layout.setCellSpacing(5);
 
-    // Add a link to the source code of the Interface
-    final String rawFile = getSimpleName(ColorConstants.class);
-    Anchor link = new Anchor(rawFile);
-    link.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        fireRawSourceRequest(rawFile + ".java");
-      }
-    });
-    HorizontalPanel linkPanel = new HorizontalPanel();
-    linkPanel.setSpacing(3);
-    linkPanel.add(new HTML(constants.cwConstantsWithLookupExampleLinkText()));
-    linkPanel.add(link);
-    layout.setWidget(0, 0, linkPanel);
-    formatter.setColSpan(0, 0, 2);
+		// Add a link to the source code of the Interface
+		final String rawFile = getSimpleName(ColorConstants.class);
+		Anchor link = new Anchor(rawFile);
+		link.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				fireRawSourceRequest(rawFile + ".java");
+			}
+		});
+		HorizontalPanel linkPanel = new HorizontalPanel();
+		linkPanel.setSpacing(3);
+		linkPanel.add(new HTML(constants.cwConstantsWithLookupExampleLinkText()));
+		linkPanel.add(link);
+		layout.setWidget(0, 0, linkPanel);
+		formatter.setColSpan(0, 0, 2);
 
-    // Add a field so the user can type a color
-    colorBox = new TextBox();
-    colorBox.setText("red");
-    colorBox.setWidth("17em");
-    layout.setHTML(1, 0, constants.cwConstantsWithLookupExampleMethodName());
-    layout.setWidget(1, 1, colorBox);
+		// Add a field so the user can type a color
+		colorBox = new TextBox();
+		colorBox.setText("red");
+		colorBox.setWidth("17em");
+		layout.setHTML(1, 0, constants.cwConstantsWithLookupExampleMethodName());
+		layout.setWidget(1, 1, colorBox);
 
-    // Show the last name
-    colorResultsBox = new TextBox();
-    colorResultsBox.setEnabled(false);
-    colorResultsBox.setWidth("17em");
-    layout.setHTML(2, 0, constants.cwConstantsWithLookupExampleResults());
-    layout.setWidget(2, 1, colorResultsBox);
+		// Show the last name
+		colorResultsBox = new TextBox();
+		colorResultsBox.setEnabled(false);
+		colorResultsBox.setWidth("17em");
+		layout.setHTML(2, 0, constants.cwConstantsWithLookupExampleResults());
+		layout.setWidget(2, 1, colorResultsBox);
 
-    // Add a handler to update the color as the user types a lookup value
-    colorBox.addKeyUpHandler(new KeyUpHandler() {
-      public void onKeyUp(KeyUpEvent event) {
-        updateColor();
-      }
-    });
+		// Add a handler to update the color as the user types a lookup value
+		colorBox.addKeyUpHandler(new KeyUpHandler() {
+			public void onKeyUp(KeyUpEvent event) {
+				updateColor();
+			}
+		});
 
-    // Return the layout Widget
-    updateColor();
-    return layout;
-  }
+		// Return the layout Widget
+		updateColor();
+		return layout;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwConstantsWithLookupExample.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwConstantsWithLookupExample.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Lookup the color based on the value the user entered.
-   */
-  @ShowcaseSource
-  private void updateColor() {
-    String key = colorBox.getText().trim();
-    if (key.equals("")) {
-      colorResultsBox.setText(constants.cwConstantsWithLookupExampleNoInput());
-    } else {
-      try {
-        String color = colorConstants.getString(key);
-        colorResultsBox.setText(color);
-      } catch (MissingResourceException e) {
-        colorResultsBox.setText(
-            constants.cwConstantsWithLookupExampleNoMatches());
-      }
-    }
-  }
+	/**
+	 * Lookup the color based on the value the user entered.
+	 */
+	@ShowcaseSource
+	private void updateColor() {
+		String key = colorBox.getText().trim();
+		if (key.equals("")) {
+			colorResultsBox.setText(constants.cwConstantsWithLookupExampleNoInput());
+		} else {
+			try {
+				String color = colorConstants.getString(key);
+				colorResultsBox.setText(color);
+			} catch (MissingResourceException e) {
+				colorResultsBox.setText(constants.cwConstantsWithLookupExampleNoMatches());
+			}
+		}
+	}
 }

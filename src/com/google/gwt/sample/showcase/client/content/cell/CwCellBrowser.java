@@ -39,101 +39,97 @@ import java.util.List;
 /**
  * Example file.
  */
-@ShowcaseRaw({
-    "ContactDatabase.java", "ContactTreeViewModel.java",
-    "CwCellBrowser.ui.xml"})
+@ShowcaseRaw({ "ContactDatabase.java", "ContactTreeViewModel.java", "CwCellBrowser.ui.xml" })
 public class CwCellBrowser extends ContentWidget {
 
-  /**
-   * The UiBinder interface used by this example.
-   */
-  @ShowcaseSource
-  interface Binder extends UiBinder<Widget, CwCellBrowser> {
-  }
+	/**
+	 * The UiBinder interface used by this example.
+	 */
+	@ShowcaseSource
+	interface Binder extends UiBinder<Widget, CwCellBrowser> {
+	}
 
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwCellBrowserDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwCellBrowserDescription();
 
-    String cwCellBrowserName();
-  }
+		String cwCellBrowserName();
+	}
 
-  /**
-   * The CellBrowser.
-   */
-  @ShowcaseData
-  @UiField(provided = true)
-  CellBrowser cellBrowser;
+	/**
+	 * The CellBrowser.
+	 */
+	@ShowcaseData
+	@UiField(provided = true)
+	CellBrowser cellBrowser;
 
-  /**
-   * The label that shows selected names.
-   */
-  @ShowcaseData
-  @UiField
-  Label selectedLabel;
+	/**
+	 * The label that shows selected names.
+	 */
+	@ShowcaseData
+	@UiField
+	Label selectedLabel;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwCellBrowser(CwConstants constants) {
-    super(constants.cwCellBrowserName(), constants.cwCellBrowserDescription(),
-        false, "ContactDatabase.java", "ContactTreeViewModel.java",
-        "CwCellBrowser.ui.xml");
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwCellBrowser(CwConstants constants) {
+		super(constants.cwCellBrowserName(), constants.cwCellBrowserDescription(), false, "ContactDatabase.java",
+				"ContactTreeViewModel.java", "CwCellBrowser.ui.xml");
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    final MultiSelectionModel<ContactInfo> selectionModel = new MultiSelectionModel<ContactInfo>(ContactDatabase.ContactInfo.KEY_PROVIDER);
-    selectionModel.addSelectionChangeHandler(
-        new SelectionChangeEvent.Handler() {
-          public void onSelectionChange(SelectionChangeEvent event) {
-            StringBuilder sb = new StringBuilder();
-            boolean first = true;
-            List<ContactInfo> selected = new ArrayList<ContactInfo>(
-                selectionModel.getSelectedSet());
-            Collections.sort(selected);
-            for (ContactInfo value : selected) {
-              if (first) {
-                first = false;
-              } else {
-                sb.append(", ");
-              }
-              sb.append(value.getFullName());
-            }
-            selectedLabel.setText(sb.toString());
-          }
-        });
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		final MultiSelectionModel<ContactInfo> selectionModel = new MultiSelectionModel<ContactInfo>(
+				ContactDatabase.ContactInfo.KEY_PROVIDER);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				StringBuilder sb = new StringBuilder();
+				boolean first = true;
+				List<ContactInfo> selected = new ArrayList<ContactInfo>(selectionModel.getSelectedSet());
+				Collections.sort(selected);
+				for (ContactInfo value : selected) {
+					if (first) {
+						first = false;
+					} else {
+						sb.append(", ");
+					}
+					sb.append(value.getFullName());
+				}
+				selectedLabel.setText(sb.toString());
+			}
+		});
 
-    cellBrowser = new CellBrowser(
-        new ContactTreeViewModel(selectionModel), null);
-    cellBrowser.setAnimationEnabled(true);
+		cellBrowser = new CellBrowser(new ContactTreeViewModel(selectionModel), null);
+		cellBrowser.setAnimationEnabled(true);
 
-    // Create the UiBinder.
-    Binder uiBinder = GWT.create(Binder.class);
-    Widget widget = uiBinder.createAndBindUi(this);
-    return widget;
-  }
+		// Create the UiBinder.
+		Binder uiBinder = GWT.create(Binder.class);
+		Widget widget = uiBinder.createAndBindUi(this);
+		return widget;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwCellBrowser.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwCellBrowser.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

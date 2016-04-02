@@ -32,77 +32,76 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle({
-    ".gwt-SuggestBox", ".gwt-SuggestBoxPopup", "html>body .gwt-SuggestBoxPopup",
-    "* html .gwt-SuggestBoxPopup"})
+@ShowcaseStyle({ ".gwt-SuggestBox", ".gwt-SuggestBoxPopup", "html>body .gwt-SuggestBoxPopup",
+		"* html .gwt-SuggestBoxPopup" })
 public class CwSuggestBox extends ContentWidget {
 
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwSuggestBoxDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwSuggestBoxDescription();
 
-    String cwSuggestBoxLabel();
+		String cwSuggestBoxLabel();
 
-    String cwSuggestBoxName();
+		String cwSuggestBoxName();
 
-    String[] cwSuggestBoxWords();
-  }
+		String[] cwSuggestBoxWords();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwSuggestBox(CwConstants constants) {
-    super(constants.cwSuggestBoxName(), constants.cwSuggestBoxDescription(),
-        true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwSuggestBox(CwConstants constants) {
+		super(constants.cwSuggestBoxName(), constants.cwSuggestBoxDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Define the oracle that finds suggestions
-    MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-    String[] words = constants.cwSuggestBoxWords();
-    for (int i = 0; i < words.length; ++i) {
-      oracle.add(words[i]);
-    }
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Define the oracle that finds suggestions
+		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+		String[] words = constants.cwSuggestBoxWords();
+		for (int i = 0; i < words.length; ++i) {
+			oracle.add(words[i]);
+		}
 
-    // Create the suggest box
-    final SuggestBox suggestBox = new SuggestBox(oracle);
-    suggestBox.ensureDebugId("cwSuggestBox");
-    VerticalPanel suggestPanel = new VerticalPanel();
-    suggestPanel.add(new HTML(constants.cwSuggestBoxLabel()));
-    suggestPanel.add(suggestBox);
+		// Create the suggest box
+		final SuggestBox suggestBox = new SuggestBox(oracle);
+		suggestBox.ensureDebugId("cwSuggestBox");
+		VerticalPanel suggestPanel = new VerticalPanel();
+		suggestPanel.add(new HTML(constants.cwSuggestBoxLabel()));
+		suggestPanel.add(suggestBox);
 
-    // Return the panel
-    return suggestPanel;
-  }
+		// Return the panel
+		return suggestPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwSuggestBox.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwSuggestBox.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

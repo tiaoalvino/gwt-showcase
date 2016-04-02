@@ -21,6 +21,5 @@ import com.google.gwt.i18n.client.Messages;
  * Internationalized messages.
  */
 public interface ErrorMessages extends Messages {
-  String permissionDenied(String username, String securityClearance,
-      String inaccessibleResource);
+	String permissionDenied(String username, String securityClearance, String inaccessibleResource);
 }

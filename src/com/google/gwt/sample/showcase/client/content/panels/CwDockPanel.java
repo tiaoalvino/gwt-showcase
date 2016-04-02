@@ -33,90 +33,90 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @ShowcaseStyle(".cw-DockPanel")
 public class CwDockPanel extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
 
-    String cwDockPanelCenter();
+		String cwDockPanelCenter();
 
-    String cwDockPanelDescription();
+		String cwDockPanelDescription();
 
-    String cwDockPanelEast();
+		String cwDockPanelEast();
 
-    String cwDockPanelName();
+		String cwDockPanelName();
 
-    String cwDockPanelNorth1();
+		String cwDockPanelNorth1();
 
-    String cwDockPanelNorth2();
+		String cwDockPanelNorth2();
 
-    String cwDockPanelSouth1();
+		String cwDockPanelSouth1();
 
-    String cwDockPanelSouth2();
+		String cwDockPanelSouth2();
 
-    String cwDockPanelWest();
-  }
+		String cwDockPanelWest();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwDockPanel(CwConstants constants) {
-    super(
-        constants.cwDockPanelName(), constants.cwDockPanelDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwDockPanel(CwConstants constants) {
+		super(constants.cwDockPanelName(), constants.cwDockPanelDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a Dock Panel
-    DockPanel dock = new DockPanel();
-    dock.setStyleName("cw-DockPanel");
-    dock.setSpacing(4);
-    dock.setHorizontalAlignment(DockPanel.ALIGN_CENTER);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a Dock Panel
+		DockPanel dock = new DockPanel();
+		dock.setStyleName("cw-DockPanel");
+		dock.setSpacing(4);
+		dock.setHorizontalAlignment(DockPanel.ALIGN_CENTER);
 
-    // Add text all around
-    dock.add(new HTML(constants.cwDockPanelNorth1()), DockPanel.NORTH);
-    dock.add(new HTML(constants.cwDockPanelSouth1()), DockPanel.SOUTH);
-    dock.add(new HTML(constants.cwDockPanelEast()), DockPanel.EAST);
-    dock.add(new HTML(constants.cwDockPanelWest()), DockPanel.WEST);
-    dock.add(new HTML(constants.cwDockPanelNorth2()), DockPanel.NORTH);
-    dock.add(new HTML(constants.cwDockPanelSouth2()), DockPanel.SOUTH);
+		// Add text all around
+		dock.add(new HTML(constants.cwDockPanelNorth1()), DockPanel.NORTH);
+		dock.add(new HTML(constants.cwDockPanelSouth1()), DockPanel.SOUTH);
+		dock.add(new HTML(constants.cwDockPanelEast()), DockPanel.EAST);
+		dock.add(new HTML(constants.cwDockPanelWest()), DockPanel.WEST);
+		dock.add(new HTML(constants.cwDockPanelNorth2()), DockPanel.NORTH);
+		dock.add(new HTML(constants.cwDockPanelSouth2()), DockPanel.SOUTH);
 
-    // Add scrollable text in the center
-    HTML contents = new HTML(constants.cwDockPanelCenter());
-    ScrollPanel scroller = new ScrollPanel(contents);
-    scroller.setSize("400px", "100px");
-    dock.add(scroller, DockPanel.CENTER);
+		// Add scrollable text in the center
+		HTML contents = new HTML(constants.cwDockPanelCenter());
+		ScrollPanel scroller = new ScrollPanel(contents);
+		scroller.setSize("400px", "100px");
+		dock.add(scroller, DockPanel.CENTER);
 
-    // Return the content
-    dock.ensureDebugId("cwDockPanel");
-    return dock;
-  }
+		// Return the content
+		dock.ensureDebugId("cwDockPanel");
+		return dock;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwDockPanel.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwDockPanel.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

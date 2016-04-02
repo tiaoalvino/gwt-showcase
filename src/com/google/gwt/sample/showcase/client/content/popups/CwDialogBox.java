@@ -39,153 +39,144 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle(/* styles */{
-    ".gwt-DialogBox", "html>body .gwt-DialogBox", "* html .gwt-DialogBox",
-    ".cw-DialogBox"})
+@ShowcaseStyle(/* styles */{ ".gwt-DialogBox", "html>body .gwt-DialogBox", "* html .gwt-DialogBox", ".cw-DialogBox" })
 public class CwDialogBox extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwDialogBoxCaption();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwDialogBoxCaption();
 
-    String cwDialogBoxClose();
+		String cwDialogBoxClose();
 
-    String cwDialogBoxDescription();
+		String cwDialogBoxDescription();
 
-    String cwDialogBoxDetails();
+		String cwDialogBoxDetails();
 
-    String cwDialogBoxItem();
+		String cwDialogBoxItem();
 
-    String cwDialogBoxListBoxInfo();
+		String cwDialogBoxListBoxInfo();
 
-    String cwDialogBoxMakeTransparent();
+		String cwDialogBoxMakeTransparent();
 
-    String cwDialogBoxName();
+		String cwDialogBoxName();
 
-    String cwDialogBoxShowButton();
-  }
+		String cwDialogBoxShowButton();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwDialogBox(CwConstants constants) {
-    super(
-        constants.cwDialogBoxName(), constants.cwDialogBoxDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwDialogBox(CwConstants constants) {
+		super(constants.cwDialogBoxName(), constants.cwDialogBoxDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create the dialog box
-    final DialogBox dialogBox = createDialogBox();
-    dialogBox.setGlassEnabled(true);
-    dialogBox.setAnimationEnabled(true);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create the dialog box
+		final DialogBox dialogBox = createDialogBox();
+		dialogBox.setGlassEnabled(true);
+		dialogBox.setAnimationEnabled(true);
 
-    // Create a button to show the dialog Box
-    Button openButton = new Button(
-        constants.cwDialogBoxShowButton(), new ClickHandler() {
-          public void onClick(ClickEvent sender) {
-            dialogBox.center();
-            dialogBox.show();
-          }
-        });
+		// Create a button to show the dialog Box
+		Button openButton = new Button(constants.cwDialogBoxShowButton(), new ClickHandler() {
+			public void onClick(ClickEvent sender) {
+				dialogBox.center();
+				dialogBox.show();
+			}
+		});
 
-    // Create a ListBox
-    HTML listDesc = new HTML(
-        "<br><br><br>" + constants.cwDialogBoxListBoxInfo());
+		// Create a ListBox
+		HTML listDesc = new HTML("<br><br><br>" + constants.cwDialogBoxListBoxInfo());
 
-    ListBox list = new ListBox();
-    list.setVisibleItemCount(1);
-    for (int i = 10; i > 0; i--) {
-      list.addItem(constants.cwDialogBoxItem() + " " + i);
-    }
+		ListBox list = new ListBox();
+		list.setVisibleItemCount(1);
+		for (int i = 10; i > 0; i--) {
+			list.addItem(constants.cwDialogBoxItem() + " " + i);
+		}
 
-    // Add the button and list to a panel
-    VerticalPanel vPanel = new VerticalPanel();
-    vPanel.setSpacing(8);
-    vPanel.add(openButton);
-    vPanel.add(listDesc);
-    vPanel.add(list);
+		// Add the button and list to a panel
+		VerticalPanel vPanel = new VerticalPanel();
+		vPanel.setSpacing(8);
+		vPanel.add(openButton);
+		vPanel.add(listDesc);
+		vPanel.add(list);
 
-    // Return the panel
-    return vPanel;
-  }
+		// Return the panel
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwDialogBox.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwDialogBox.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Create the dialog box for this example.
-   *
-   * @return the new dialog box
-   */
-  @ShowcaseSource
-  private DialogBox createDialogBox() {
-    // Create a dialog box and set the caption text
-    final DialogBox dialogBox = new DialogBox();
-    dialogBox.ensureDebugId("cwDialogBox");
-    dialogBox.setText(constants.cwDialogBoxCaption());
+	/**
+	 * Create the dialog box for this example.
+	 *
+	 * @return the new dialog box
+	 */
+	@ShowcaseSource
+	private DialogBox createDialogBox() {
+		// Create a dialog box and set the caption text
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.ensureDebugId("cwDialogBox");
+		dialogBox.setText(constants.cwDialogBoxCaption());
 
-    // Create a table to layout the content
-    VerticalPanel dialogContents = new VerticalPanel();
-    dialogContents.setSpacing(4);
-    dialogBox.setWidget(dialogContents);
+		// Create a table to layout the content
+		VerticalPanel dialogContents = new VerticalPanel();
+		dialogContents.setSpacing(4);
+		dialogBox.setWidget(dialogContents);
 
-    // Add some text to the top of the dialog
-    HTML details = new HTML(constants.cwDialogBoxDetails());
-    dialogContents.add(details);
-    dialogContents.setCellHorizontalAlignment(
-        details, HasHorizontalAlignment.ALIGN_CENTER);
+		// Add some text to the top of the dialog
+		HTML details = new HTML(constants.cwDialogBoxDetails());
+		dialogContents.add(details);
+		dialogContents.setCellHorizontalAlignment(details, HasHorizontalAlignment.ALIGN_CENTER);
 
-    // Add an image to the dialog
-    Image image = new Image(Showcase.images.jimmy());
-    dialogContents.add(image);
-    dialogContents.setCellHorizontalAlignment(
-        image, HasHorizontalAlignment.ALIGN_CENTER);
+		// Add an image to the dialog
+		Image image = new Image(Showcase.images.jimmy());
+		dialogContents.add(image);
+		dialogContents.setCellHorizontalAlignment(image, HasHorizontalAlignment.ALIGN_CENTER);
 
-    // Add a close button at the bottom of the dialog
-    Button closeButton = new Button(
-        constants.cwDialogBoxClose(), new ClickHandler() {
-          public void onClick(ClickEvent event) {
-            dialogBox.hide();
-          }
-        });
-    dialogContents.add(closeButton);
-    if (LocaleInfo.getCurrentLocale().isRTL()) {
-      dialogContents.setCellHorizontalAlignment(
-          closeButton, HasHorizontalAlignment.ALIGN_LEFT);
+		// Add a close button at the bottom of the dialog
+		Button closeButton = new Button(constants.cwDialogBoxClose(), new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				dialogBox.hide();
+			}
+		});
+		dialogContents.add(closeButton);
+		if (LocaleInfo.getCurrentLocale().isRTL()) {
+			dialogContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_LEFT);
 
-    } else {
-      dialogContents.setCellHorizontalAlignment(
-          closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
-    }
+		} else {
+			dialogContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
+		}
 
-    // Return the dialog box
-    return dialogBox;
-  }
+		// Return the dialog box
+		return dialogBox;
+	}
 }

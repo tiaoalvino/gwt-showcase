@@ -41,160 +41,163 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle(/* css style names */{
-    ".gwt-TextBox", ".gwt-PasswordTextBox", ".gwt-TextArea"})
+@ShowcaseStyle(/* css style names */{ ".gwt-TextBox", ".gwt-PasswordTextBox", ".gwt-TextArea" })
 public class CwBasicText extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwBasicTextAreaLabel();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwBasicTextAreaLabel();
 
-    String cwBasicTextDescription();
+		String cwBasicTextDescription();
 
-    String cwBasicTextName();
+		String cwBasicTextName();
 
-    String cwBasicTextNormalLabel();
+		String cwBasicTextNormalLabel();
 
-    String cwBasicTextPasswordLabel();
+		String cwBasicTextPasswordLabel();
 
-    String cwBasicTextReadOnly();
+		String cwBasicTextReadOnly();
 
-    String cwBasicTextSelected();
-  }
+		String cwBasicTextSelected();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwBasicText(CwConstants constants) {
-    super(
-        constants.cwBasicTextName(), constants.cwBasicTextDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwBasicText(CwConstants constants) {
+		super(constants.cwBasicTextName(), constants.cwBasicTextDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a panel to layout the widgets
-    VerticalPanel vpanel = new VerticalPanel();
-    vpanel.setSpacing(5);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a panel to layout the widgets
+		VerticalPanel vpanel = new VerticalPanel();
+		vpanel.setSpacing(5);
 
-    // Add a normal and disabled text box
-    TextBox normalText = new TextBox();
-    normalText.ensureDebugId("cwBasicText-textbox");
-    // Set the normal text box to automatically adjust its direction according
-    // to the input text. Use the Any-RTL heuristic, which sets an RTL direction
-    // iff the text contains at least one RTL character.
-    normalText.setDirectionEstimator(AnyRtlDirectionEstimator.get());
-    TextBox disabledText = new TextBox();
-    disabledText.ensureDebugId("cwBasicText-textbox-disabled");
-    disabledText.setText(constants.cwBasicTextReadOnly());
-    disabledText.setEnabled(false);
-    vpanel.add(new HTML(constants.cwBasicTextNormalLabel()));
-    vpanel.add(createTextExample(normalText, true));
-    vpanel.add(createTextExample(disabledText, false));
+		// Add a normal and disabled text box
+		TextBox normalText = new TextBox();
+		normalText.ensureDebugId("cwBasicText-textbox");
+		// Set the normal text box to automatically adjust its direction
+		// according
+		// to the input text. Use the Any-RTL heuristic, which sets an RTL
+		// direction
+		// iff the text contains at least one RTL character.
+		normalText.setDirectionEstimator(AnyRtlDirectionEstimator.get());
+		TextBox disabledText = new TextBox();
+		disabledText.ensureDebugId("cwBasicText-textbox-disabled");
+		disabledText.setText(constants.cwBasicTextReadOnly());
+		disabledText.setEnabled(false);
+		vpanel.add(new HTML(constants.cwBasicTextNormalLabel()));
+		vpanel.add(createTextExample(normalText, true));
+		vpanel.add(createTextExample(disabledText, false));
 
-    // Add a normal and disabled password text box
-    PasswordTextBox normalPassword = new PasswordTextBox();
-    normalPassword.ensureDebugId("cwBasicText-password");
-    PasswordTextBox disabledPassword = new PasswordTextBox();
-    disabledPassword.ensureDebugId("cwBasicText-password-disabled");
-    disabledPassword.setText(constants.cwBasicTextReadOnly());
-    disabledPassword.setEnabled(false);
-    vpanel.add(new HTML("<br><br>" + constants.cwBasicTextPasswordLabel()));
-    vpanel.add(createTextExample(normalPassword, true));
-    vpanel.add(createTextExample(disabledPassword, false));
+		// Add a normal and disabled password text box
+		PasswordTextBox normalPassword = new PasswordTextBox();
+		normalPassword.ensureDebugId("cwBasicText-password");
+		PasswordTextBox disabledPassword = new PasswordTextBox();
+		disabledPassword.ensureDebugId("cwBasicText-password-disabled");
+		disabledPassword.setText(constants.cwBasicTextReadOnly());
+		disabledPassword.setEnabled(false);
+		vpanel.add(new HTML("<br><br>" + constants.cwBasicTextPasswordLabel()));
+		vpanel.add(createTextExample(normalPassword, true));
+		vpanel.add(createTextExample(disabledPassword, false));
 
-    // Add a text area
-    TextArea textArea = new TextArea();
-    textArea.ensureDebugId("cwBasicText-textarea");
-    textArea.setVisibleLines(5);
-    vpanel.add(new HTML("<br><br>" + constants.cwBasicTextAreaLabel()));
-    vpanel.add(createTextExample(textArea, true));
+		// Add a text area
+		TextArea textArea = new TextArea();
+		textArea.ensureDebugId("cwBasicText-textarea");
+		textArea.setVisibleLines(5);
+		vpanel.add(new HTML("<br><br>" + constants.cwBasicTextAreaLabel()));
+		vpanel.add(createTextExample(textArea, true));
 
-    // Return the panel
-    return vpanel;
-  }
+		// Return the panel
+		return vpanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwBasicText.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwBasicText.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Create a TextBox example that includes the text box and an optional handler
-   * that updates a Label with the currently selected text.
-   *
-   * @param textBox the text box to handle
-   * @param addSelection add handlers to update label
-   * @return the Label that will be updated
-   */
-  @ShowcaseSource
-  private HorizontalPanel createTextExample(
-      final TextBoxBase textBox, boolean addSelection) {
-    // Add the text box and label to a panel
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setSpacing(4);
-    hPanel.add(textBox);
+	/**
+	 * Create a TextBox example that includes the text box and an optional
+	 * handler that updates a Label with the currently selected text.
+	 *
+	 * @param textBox
+	 *            the text box to handle
+	 * @param addSelection
+	 *            add handlers to update label
+	 * @return the Label that will be updated
+	 */
+	@ShowcaseSource
+	private HorizontalPanel createTextExample(final TextBoxBase textBox, boolean addSelection) {
+		// Add the text box and label to a panel
+		HorizontalPanel hPanel = new HorizontalPanel();
+		hPanel.setSpacing(4);
+		hPanel.add(textBox);
 
-    // Add handlers
-    if (addSelection) {
-      // Create the new label
-      final Label label = new Label(constants.cwBasicTextSelected() + ": 0, 0");
+		// Add handlers
+		if (addSelection) {
+			// Create the new label
+			final Label label = new Label(constants.cwBasicTextSelected() + ": 0, 0");
 
-      // Add a KeyUpHandler
-      textBox.addKeyUpHandler(new KeyUpHandler() {
-        public void onKeyUp(KeyUpEvent event) {
-          updateSelectionLabel(textBox, label);
-        }
-      });
+			// Add a KeyUpHandler
+			textBox.addKeyUpHandler(new KeyUpHandler() {
+				public void onKeyUp(KeyUpEvent event) {
+					updateSelectionLabel(textBox, label);
+				}
+			});
 
-      // Add a ClickHandler
-      textBox.addClickHandler(new ClickHandler() {
-        public void onClick(ClickEvent event) {
-          updateSelectionLabel(textBox, label);
-        }
-      });
+			// Add a ClickHandler
+			textBox.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					updateSelectionLabel(textBox, label);
+				}
+			});
 
-      // Add the label to the box
-      hPanel.add(label);
-    }
+			// Add the label to the box
+			hPanel.add(label);
+		}
 
-    // Return the panel
-    return hPanel;
-  }
+		// Return the panel
+		return hPanel;
+	}
 
-  /**
-   * Update the text in one of the selection labels.
-   *
-   * @param textBox the text box
-   * @param label the label to update
-   */
-  @ShowcaseSource
-  private void updateSelectionLabel(TextBoxBase textBox, Label label) {
-    label.setText(
-        constants.cwBasicTextSelected() + ": " + textBox.getCursorPos() + ", "
-            + textBox.getSelectionLength());
-  }
+	/**
+	 * Update the text in one of the selection labels.
+	 *
+	 * @param textBox
+	 *            the text box
+	 * @param label
+	 *            the label to update
+	 */
+	@ShowcaseSource
+	private void updateSelectionLabel(TextBoxBase textBox, Label label) {
+		label.setText(
+				constants.cwBasicTextSelected() + ": " + textBox.getCursorPos() + ", " + textBox.getSelectionLength());
+	}
 }

@@ -37,93 +37,92 @@ import com.google.gwt.user.datepicker.client.DateBox;
  */
 public class ContactInfoForm extends Composite {
 
-  private static Binder uiBinder = GWT.create(Binder.class);
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-  interface Binder extends UiBinder<Widget, ContactInfoForm> {
-  }
+	interface Binder extends UiBinder<Widget, ContactInfoForm> {
+	}
 
-  @UiField
-  TextArea addressBox;
-  @UiField
-  DateBox birthdayBox;
-  @UiField
-  ListBox categoryBox;
-  @UiField
-  Button createButton;
-  @UiField
-  TextBox firstNameBox;
-  @UiField
-  TextBox lastNameBox;
-  @UiField
-  Button updateButton;
+	@UiField
+	TextArea addressBox;
+	@UiField
+	DateBox birthdayBox;
+	@UiField
+	ListBox categoryBox;
+	@UiField
+	Button createButton;
+	@UiField
+	TextBox firstNameBox;
+	@UiField
+	TextBox lastNameBox;
+	@UiField
+	Button updateButton;
 
-  private ContactInfo contactInfo;
+	private ContactInfo contactInfo;
 
-  public ContactInfoForm() {
-    initWidget(uiBinder.createAndBindUi(this));
-    DateTimeFormat dateFormat = DateTimeFormat.getFormat(
-        PredefinedFormat.DATE_LONG);
-    birthdayBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+	public ContactInfoForm() {
+		initWidget(uiBinder.createAndBindUi(this));
+		DateTimeFormat dateFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG);
+		birthdayBox.setFormat(new DateBox.DefaultFormat(dateFormat));
 
-    // Add the categories to the category box.
-    final Category[] categories = ContactDatabase.get().queryCategories();
-    for (Category category : categories) {
-      categoryBox.addItem(category.getDisplayName());
-    }
+		// Add the categories to the category box.
+		final Category[] categories = ContactDatabase.get().queryCategories();
+		for (Category category : categories) {
+			categoryBox.addItem(category.getDisplayName());
+		}
 
-    // Initialize the contact to null.
-    setContact(null);
+		// Initialize the contact to null.
+		setContact(null);
 
-    // Handle events.
-    updateButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        if (contactInfo == null) {
-          return;
-        }
+		// Handle events.
+		updateButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (contactInfo == null) {
+					return;
+				}
 
-        // Update the contact.
-        contactInfo.setFirstName(firstNameBox.getText());
-        contactInfo.setLastName(lastNameBox.getText());
-        contactInfo.setAddress(addressBox.getText());
-        contactInfo.setBirthday(birthdayBox.getValue());
-        int categoryIndex = categoryBox.getSelectedIndex();
-        contactInfo.setCategory(categories[categoryIndex]);
+				// Update the contact.
+				contactInfo.setFirstName(firstNameBox.getText());
+				contactInfo.setLastName(lastNameBox.getText());
+				contactInfo.setAddress(addressBox.getText());
+				contactInfo.setBirthday(birthdayBox.getValue());
+				int categoryIndex = categoryBox.getSelectedIndex();
+				contactInfo.setCategory(categories[categoryIndex]);
 
-        // Update the views.
-        ContactDatabase.get().refreshDisplays();
-      }
-    });
-    createButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        int categoryIndex = categoryBox.getSelectedIndex();
-        Category category = categories[categoryIndex];
-        contactInfo = new ContactInfo(category);
-        contactInfo.setFirstName(firstNameBox.getText());
-        contactInfo.setLastName(lastNameBox.getText());
-        contactInfo.setAddress(addressBox.getText());
-        contactInfo.setBirthday(birthdayBox.getValue());
-        ContactDatabase.get().addContact(contactInfo);
-        setContact(contactInfo);
-      }
-    });
-  }
+				// Update the views.
+				ContactDatabase.get().refreshDisplays();
+			}
+		});
+		createButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				int categoryIndex = categoryBox.getSelectedIndex();
+				Category category = categories[categoryIndex];
+				contactInfo = new ContactInfo(category);
+				contactInfo.setFirstName(firstNameBox.getText());
+				contactInfo.setLastName(lastNameBox.getText());
+				contactInfo.setAddress(addressBox.getText());
+				contactInfo.setBirthday(birthdayBox.getValue());
+				ContactDatabase.get().addContact(contactInfo);
+				setContact(contactInfo);
+			}
+		});
+	}
 
-  public void setContact(ContactInfo contact) {
-    this.contactInfo = contact;
-    updateButton.setEnabled(contact != null);
-    if (contact != null) {
-      firstNameBox.setText(contact.getFirstName());
-      lastNameBox.setText(contact.getLastName());
-      addressBox.setText(contact.getAddress());
-      birthdayBox.setValue(contact.getBirthday());
-      Category category = contact.getCategory();
-      Category[] categories = ContactDatabase.get().queryCategories();
-      for (int i = 0; i < categories.length; i++) {
-        if (category == categories[i]) {
-          categoryBox.setSelectedIndex(i);
-          break;
-        }
-      }
-    }
-  }
+	public void setContact(ContactInfo contact) {
+		this.contactInfo = contact;
+		updateButton.setEnabled(contact != null);
+		if (contact != null) {
+			firstNameBox.setText(contact.getFirstName());
+			lastNameBox.setText(contact.getLastName());
+			addressBox.setText(contact.getAddress());
+			birthdayBox.setValue(contact.getBirthday());
+			Category category = contact.getCategory();
+			Category[] categories = ContactDatabase.get().queryCategories();
+			for (int i = 0; i < categories.length; i++) {
+				if (category == categories[i]) {
+					categoryBox.setSelectedIndex(i);
+					break;
+				}
+			}
+		}
+	}
 }

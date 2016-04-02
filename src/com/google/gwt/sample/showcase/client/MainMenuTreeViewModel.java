@@ -82,340 +82,295 @@ import java.util.Set;
  */
 public class MainMenuTreeViewModel implements TreeViewModel {
 
-  /**
-   * The constants used in the menu.
-   */
-  public static interface MenuConstants extends Constants {
+	/**
+	 * The constants used in the menu.
+	 */
+	public static interface MenuConstants extends Constants {
 
-    String categoryCells();
+		String categoryCells();
 
-    String categoryI18N();
+		String categoryI18N();
 
-    String categoryLists();
+		String categoryLists();
 
-    String categoryOther();
+		String categoryOther();
 
-    String categoryPanels();
+		String categoryPanels();
 
-    String categoryPopups();
+		String categoryPopups();
 
-    String categoryTables();
+		String categoryTables();
 
-    String categoryTextInput();
+		String categoryTextInput();
 
-    String categoryWidgets();
-  }
+		String categoryWidgets();
+	}
 
-  /**
-   * The cell used to render categories.
-   */
-  private static class CategoryCell extends AbstractCell<Category> {
-    @Override
-    public void render(Context context, Category value, SafeHtmlBuilder sb) {
-      if (value != null) {
-        sb.appendEscaped(value.getName());
-      }
-    }
-  }
+	/**
+	 * The cell used to render categories.
+	 */
+	private static class CategoryCell extends AbstractCell<Category> {
+		@Override
+		public void render(Context context, Category value, SafeHtmlBuilder sb) {
+			if (value != null) {
+				sb.appendEscaped(value.getName());
+			}
+		}
+	}
 
-  /**
-   * The cell used to render examples.
-   */
-  private static class ContentWidgetCell extends AbstractCell<ContentWidget> {
-    @Override
-    public void render(Context context, ContentWidget value, SafeHtmlBuilder sb) {
-      if (value != null) {
-        sb.appendEscaped(value.getName());
-      }
-    }
-  }
+	/**
+	 * The cell used to render examples.
+	 */
+	private static class ContentWidgetCell extends AbstractCell<ContentWidget> {
+		@Override
+		public void render(Context context, ContentWidget value, SafeHtmlBuilder sb) {
+			if (value != null) {
+				sb.appendEscaped(value.getName());
+			}
+		}
+	}
 
-  /**
-   * A top level category in the tree.
-   */
-  public class Category {
+	/**
+	 * A top level category in the tree.
+	 */
+	public class Category {
 
-    private final ListDataProvider<ContentWidget> examples =
-        new ListDataProvider<ContentWidget>();
-    private final String name;
-    private NodeInfo<ContentWidget> nodeInfo;
-    private final List<RunAsyncCode> splitPoints =
-        new ArrayList<RunAsyncCode>();
+		private final ListDataProvider<ContentWidget> examples = new ListDataProvider<ContentWidget>();
+		private final String name;
+		private NodeInfo<ContentWidget> nodeInfo;
+		private final List<RunAsyncCode> splitPoints = new ArrayList<RunAsyncCode>();
 
-    public Category(String name) {
-      this.name = name;
-    }
+		public Category(String name) {
+			this.name = name;
+		}
 
-    public void addExample(ContentWidget example, RunAsyncCode splitPoint) {
-      examples.getList().add(example);
-      if (splitPoint != null) {
-        splitPoints.add(splitPoint);
-      }
-      contentCategory.put(example, this);
-      contentToken.put(Showcase.getContentWidgetToken(example), example);
-    }
+		public void addExample(ContentWidget example, RunAsyncCode splitPoint) {
+			examples.getList().add(example);
+			if (splitPoint != null) {
+				splitPoints.add(splitPoint);
+			}
+			contentCategory.put(example, this);
+			contentToken.put(Showcase.getContentWidgetToken(example), example);
+		}
 
-    public String getName() {
-      return name;
-    }
+		public String getName() {
+			return name;
+		}
 
-    /**
-     * Get the node info for the examples under this category.
-     * 
-     * @return the node info
-     */
-    public NodeInfo<ContentWidget> getNodeInfo() {
-      if (nodeInfo == null) {
-        nodeInfo = new DefaultNodeInfo<ContentWidget>(examples,
-            contentWidgetCell, selectionModel, null);
-      }
-      return nodeInfo;
-    }
+		/**
+		 * Get the node info for the examples under this category.
+		 * 
+		 * @return the node info
+		 */
+		public NodeInfo<ContentWidget> getNodeInfo() {
+			if (nodeInfo == null) {
+				nodeInfo = new DefaultNodeInfo<ContentWidget>(examples, contentWidgetCell, selectionModel, null);
+			}
+			return nodeInfo;
+		}
 
-    /**
-     * Get the list of split points to prefetch for this category.
-     * 
-     * @return the list of classes in this category
-     */
-    public Iterable<RunAsyncCode> getSplitPoints() {
-      return splitPoints;
-    }
-  }
+		/**
+		 * Get the list of split points to prefetch for this category.
+		 * 
+		 * @return the list of classes in this category
+		 */
+		public Iterable<RunAsyncCode> getSplitPoints() {
+			return splitPoints;
+		}
+	}
 
-  /**
-   * The top level categories.
-   */
-  private final ListDataProvider<Category> categories = new ListDataProvider<Category>();
+	/**
+	 * The top level categories.
+	 */
+	private final ListDataProvider<Category> categories = new ListDataProvider<Category>();
 
-  /**
-   * A mapping of {@link ContentWidget}s to their associated categories.
-   */
-  private final Map<ContentWidget, Category> contentCategory = new HashMap<ContentWidget, Category>();
+	/**
+	 * A mapping of {@link ContentWidget}s to their associated categories.
+	 */
+	private final Map<ContentWidget, Category> contentCategory = new HashMap<ContentWidget, Category>();
 
-  /**
-   * The cell used to render examples.
-   */
-  private final ContentWidgetCell contentWidgetCell = new ContentWidgetCell();
+	/**
+	 * The cell used to render examples.
+	 */
+	private final ContentWidgetCell contentWidgetCell = new ContentWidgetCell();
 
-  /**
-   * A mapping of history tokens to their associated {@link ContentWidget}.
-   */
-  private final Map<String, ContentWidget> contentToken = new HashMap<String, ContentWidget>();
+	/**
+	 * A mapping of history tokens to their associated {@link ContentWidget}.
+	 */
+	private final Map<String, ContentWidget> contentToken = new HashMap<String, ContentWidget>();
 
-  /**
-   * The selection model used to select examples.
-   */
-  private final SelectionModel<ContentWidget> selectionModel;
+	/**
+	 * The selection model used to select examples.
+	 */
+	private final SelectionModel<ContentWidget> selectionModel;
 
-  public MainMenuTreeViewModel(ShowcaseConstants constants,
-      SelectionModel<ContentWidget> selectionModel) {
-    this.selectionModel = selectionModel;
-    initializeTree(constants);
-  }
+	public MainMenuTreeViewModel(ShowcaseConstants constants, SelectionModel<ContentWidget> selectionModel) {
+		this.selectionModel = selectionModel;
+		initializeTree(constants);
+	}
 
-  /**
-   * Get the {@link Category} associated with a widget.
-   * 
-   * @param widget the {@link ContentWidget}
-   * @return the associated {@link Category}
-   */
-  public Category getCategoryForContentWidget(ContentWidget widget) {
-    return contentCategory.get(widget);
-  }
+	/**
+	 * Get the {@link Category} associated with a widget.
+	 * 
+	 * @param widget
+	 *            the {@link ContentWidget}
+	 * @return the associated {@link Category}
+	 */
+	public Category getCategoryForContentWidget(ContentWidget widget) {
+		return contentCategory.get(widget);
+	}
 
-  /**
-   * Get the content widget associated with the specified history token.
-   * 
-   * @param token the history token
-   * @return the associated {@link ContentWidget}
-   */
-  public ContentWidget getContentWidgetForToken(String token) {
-    return contentToken.get(token);
-  }
+	/**
+	 * Get the content widget associated with the specified history token.
+	 * 
+	 * @param token
+	 *            the history token
+	 * @return the associated {@link ContentWidget}
+	 */
+	public ContentWidget getContentWidgetForToken(String token) {
+		return contentToken.get(token);
+	}
 
-  public <T> NodeInfo<?> getNodeInfo(T value) {
-    if (value == null) {
-      // Return the top level categories.
-      return new DefaultNodeInfo<Category>(categories, new CategoryCell());
-    } else if (value instanceof Category) {
-      // Return the examples within the category.
-      Category category = (Category) value;
-      return category.getNodeInfo();
-    }
-    return null;
-  }
+	public <T> NodeInfo<?> getNodeInfo(T value) {
+		if (value == null) {
+			// Return the top level categories.
+			return new DefaultNodeInfo<Category>(categories, new CategoryCell());
+		} else if (value instanceof Category) {
+			// Return the examples within the category.
+			Category category = (Category) value;
+			return category.getNodeInfo();
+		}
+		return null;
+	}
 
-  public boolean isLeaf(Object value) {
-    return value != null && !(value instanceof Category);
-  }
+	public boolean isLeaf(Object value) {
+		return value != null && !(value instanceof Category);
+	}
 
-  /**
-   * Get the set of all {@link ContentWidget}s used in the model.
-   * 
-   * @return the {@link ContentWidget}s
-   */
-  Set<ContentWidget> getAllContentWidgets() {
-    Set<ContentWidget> widgets = new HashSet<ContentWidget>();
-    for (Category category : categories.getList()) {
-      for (ContentWidget example : category.examples.getList()) {
-        widgets.add(example);
-      }
-    }
-    return widgets;
-  }
+	/**
+	 * Get the set of all {@link ContentWidget}s used in the model.
+	 * 
+	 * @return the {@link ContentWidget}s
+	 */
+	Set<ContentWidget> getAllContentWidgets() {
+		Set<ContentWidget> widgets = new HashSet<ContentWidget>();
+		for (Category category : categories.getList()) {
+			for (ContentWidget example : category.examples.getList()) {
+				widgets.add(example);
+			}
+		}
+		return widgets;
+	}
 
-  /**
-   * Initialize the top level categories in the tree.
-   */
-  private void initializeTree(ShowcaseConstants constants) {
-    List<Category> catList = categories.getList();
+	/**
+	 * Initialize the top level categories in the tree.
+	 */
+	private void initializeTree(ShowcaseConstants constants) {
+		List<Category> catList = categories.getList();
 
-    // Widgets.
-    {
-      Category category = new Category(constants.categoryWidgets());
-      catList.add(category);
-      // CwCheckBox is the default example, so don't prefetch it.
-      category.addExample(new CwCheckBox(constants), null);
-      category.addExample(new CwRadioButton(constants),
-          RunAsyncCode.runAsyncCode(CwRadioButton.class));
-      category.addExample(new CwBasicButton(constants),
-          RunAsyncCode.runAsyncCode(CwBasicButton.class));
-      category.addExample(new CwCustomButton(constants),
-          RunAsyncCode.runAsyncCode(CwCustomButton.class));
-      category.addExample(new CwFileUpload(constants),
-          RunAsyncCode.runAsyncCode(CwFileUpload.class));
-      category.addExample(new CwDatePicker(constants),
-          RunAsyncCode.runAsyncCode(CwDatePicker.class));
-      category.addExample(new CwHyperlink(constants),
-          RunAsyncCode.runAsyncCode(CwHyperlink.class));
-    }
+		// Widgets.
+		{
+			Category category = new Category(constants.categoryWidgets());
+			catList.add(category);
+			// CwCheckBox is the default example, so don't prefetch it.
+			category.addExample(new CwCheckBox(constants), null);
+			category.addExample(new CwRadioButton(constants), RunAsyncCode.runAsyncCode(CwRadioButton.class));
+			category.addExample(new CwBasicButton(constants), RunAsyncCode.runAsyncCode(CwBasicButton.class));
+			category.addExample(new CwCustomButton(constants), RunAsyncCode.runAsyncCode(CwCustomButton.class));
+			category.addExample(new CwFileUpload(constants), RunAsyncCode.runAsyncCode(CwFileUpload.class));
+			category.addExample(new CwDatePicker(constants), RunAsyncCode.runAsyncCode(CwDatePicker.class));
+			category.addExample(new CwHyperlink(constants), RunAsyncCode.runAsyncCode(CwHyperlink.class));
+		}
 
-    // Lists and Menus.
-    {
-      Category category = new Category(constants.categoryLists());
-      catList.add(category);
-      category.addExample(new CwListBox(constants),
-          RunAsyncCode.runAsyncCode(CwListBox.class));
-      category.addExample(new CwSuggestBox(constants),
-          RunAsyncCode.runAsyncCode(CwSuggestBox.class));
-      category.addExample(new CwTree(constants),
-          RunAsyncCode.runAsyncCode(CwTree.class));
-      category.addExample(new CwMenuBar(constants),
-          RunAsyncCode.runAsyncCode(CwMenuBar.class));
-      category.addExample(new CwStackPanel(constants),
-          RunAsyncCode.runAsyncCode(CwStackPanel.class));
-      category.addExample(new CwStackLayoutPanel(constants),
-          RunAsyncCode.runAsyncCode(CwStackLayoutPanel.class));
-    }
+		// Lists and Menus.
+		{
+			Category category = new Category(constants.categoryLists());
+			catList.add(category);
+			category.addExample(new CwListBox(constants), RunAsyncCode.runAsyncCode(CwListBox.class));
+			category.addExample(new CwSuggestBox(constants), RunAsyncCode.runAsyncCode(CwSuggestBox.class));
+			category.addExample(new CwTree(constants), RunAsyncCode.runAsyncCode(CwTree.class));
+			category.addExample(new CwMenuBar(constants), RunAsyncCode.runAsyncCode(CwMenuBar.class));
+			category.addExample(new CwStackPanel(constants), RunAsyncCode.runAsyncCode(CwStackPanel.class));
+			category.addExample(new CwStackLayoutPanel(constants), RunAsyncCode.runAsyncCode(CwStackLayoutPanel.class));
+		}
 
-    // Text Input.
-    {
-      Category category = new Category(constants.categoryTextInput());
-      catList.add(category);
-      category.addExample(new CwBasicText(constants),
-          RunAsyncCode.runAsyncCode(CwBasicText.class));
-      category.addExample(new CwRichText(constants),
-          RunAsyncCode.runAsyncCode(CwRichText.class));
-    }
+		// Text Input.
+		{
+			Category category = new Category(constants.categoryTextInput());
+			catList.add(category);
+			category.addExample(new CwBasicText(constants), RunAsyncCode.runAsyncCode(CwBasicText.class));
+			category.addExample(new CwRichText(constants), RunAsyncCode.runAsyncCode(CwRichText.class));
+		}
 
-    // Popups.
-    {
-      Category category = new Category(constants.categoryPopups());
-      catList.add(category);
-      category.addExample(new CwBasicPopup(constants),
-          RunAsyncCode.runAsyncCode(CwBasicPopup.class));
-      category.addExample(new CwDialogBox(constants),
-          RunAsyncCode.runAsyncCode(CwDialogBox.class));
-    }
+		// Popups.
+		{
+			Category category = new Category(constants.categoryPopups());
+			catList.add(category);
+			category.addExample(new CwBasicPopup(constants), RunAsyncCode.runAsyncCode(CwBasicPopup.class));
+			category.addExample(new CwDialogBox(constants), RunAsyncCode.runAsyncCode(CwDialogBox.class));
+		}
 
-    // Panels.
-    {
-      Category category = new Category(constants.categoryPanels());
-      catList.add(category);
-      category.addExample(new CwDecoratorPanel(constants),
-          RunAsyncCode.runAsyncCode(CwDecoratorPanel.class));
-      category.addExample(new CwFlowPanel(constants),
-          RunAsyncCode.runAsyncCode(CwFlowPanel.class));
-      category.addExample(new CwHorizontalPanel(constants),
-          RunAsyncCode.runAsyncCode(CwHorizontalPanel.class));
-      category.addExample(new CwVerticalPanel(constants),
-          RunAsyncCode.runAsyncCode(CwVerticalPanel.class));
-      category.addExample(new CwAbsolutePanel(constants),
-          RunAsyncCode.runAsyncCode(CwAbsolutePanel.class));
-      category.addExample(new CwDockPanel(constants),
-          RunAsyncCode.runAsyncCode(CwDockPanel.class));
-      category.addExample(new CwDisclosurePanel(constants),
-          RunAsyncCode.runAsyncCode(CwDisclosurePanel.class));
-      category.addExample(new CwTabLayoutPanel(constants),
-          RunAsyncCode.runAsyncCode(CwTabLayoutPanel.class));
-      category.addExample(new CwSplitLayoutPanel(constants),
-          RunAsyncCode.runAsyncCode(CwSplitLayoutPanel.class));
-    }
+		// Panels.
+		{
+			Category category = new Category(constants.categoryPanels());
+			catList.add(category);
+			category.addExample(new CwDecoratorPanel(constants), RunAsyncCode.runAsyncCode(CwDecoratorPanel.class));
+			category.addExample(new CwFlowPanel(constants), RunAsyncCode.runAsyncCode(CwFlowPanel.class));
+			category.addExample(new CwHorizontalPanel(constants), RunAsyncCode.runAsyncCode(CwHorizontalPanel.class));
+			category.addExample(new CwVerticalPanel(constants), RunAsyncCode.runAsyncCode(CwVerticalPanel.class));
+			category.addExample(new CwAbsolutePanel(constants), RunAsyncCode.runAsyncCode(CwAbsolutePanel.class));
+			category.addExample(new CwDockPanel(constants), RunAsyncCode.runAsyncCode(CwDockPanel.class));
+			category.addExample(new CwDisclosurePanel(constants), RunAsyncCode.runAsyncCode(CwDisclosurePanel.class));
+			category.addExample(new CwTabLayoutPanel(constants), RunAsyncCode.runAsyncCode(CwTabLayoutPanel.class));
+			category.addExample(new CwSplitLayoutPanel(constants), RunAsyncCode.runAsyncCode(CwSplitLayoutPanel.class));
+		}
 
-    // Tables.
-    {
-      Category category = new Category(constants.categoryTables());
-      catList.add(category);
-      category.addExample(new CwGrid(constants),
-          RunAsyncCode.runAsyncCode(CwGrid.class));
-      category.addExample(new CwFlexTable(constants),
-          RunAsyncCode.runAsyncCode(CwFlexTable.class));
-    }
+		// Tables.
+		{
+			Category category = new Category(constants.categoryTables());
+			catList.add(category);
+			category.addExample(new CwGrid(constants), RunAsyncCode.runAsyncCode(CwGrid.class));
+			category.addExample(new CwFlexTable(constants), RunAsyncCode.runAsyncCode(CwFlexTable.class));
+		}
 
-    // Cells.
-    {
-      Category category = new Category(constants.categoryCells());
-      catList.add(category);
-      category.addExample(new CwCellList(constants),
-          RunAsyncCode.runAsyncCode(CwCellList.class));
-      category.addExample(new CwCellTable(constants),
-          RunAsyncCode.runAsyncCode(CwCellTable.class));
-      category.addExample(new CwDataGrid(constants),
-          RunAsyncCode.runAsyncCode(CwDataGrid.class));
-      category.addExample(new CwCustomDataGrid(constants),
-          RunAsyncCode.runAsyncCode(CwCustomDataGrid.class));
-      category.addExample(new CwCellTree(constants),
-          RunAsyncCode.runAsyncCode(CwCellTree.class));
-      category.addExample(new CwCellBrowser(constants),
-          RunAsyncCode.runAsyncCode(CwCellBrowser.class));
-      category.addExample(new CwCellSampler(constants),
-          RunAsyncCode.runAsyncCode(CwCellSampler.class));
-      category.addExample(new CwCellValidation(constants),
-          RunAsyncCode.runAsyncCode(CwCellValidation.class));
-    }
+		// Cells.
+		{
+			Category category = new Category(constants.categoryCells());
+			catList.add(category);
+			category.addExample(new CwCellList(constants), RunAsyncCode.runAsyncCode(CwCellList.class));
+			category.addExample(new CwCellTable(constants), RunAsyncCode.runAsyncCode(CwCellTable.class));
+			category.addExample(new CwDataGrid(constants), RunAsyncCode.runAsyncCode(CwDataGrid.class));
+			category.addExample(new CwCustomDataGrid(constants), RunAsyncCode.runAsyncCode(CwCustomDataGrid.class));
+			category.addExample(new CwCellTree(constants), RunAsyncCode.runAsyncCode(CwCellTree.class));
+			category.addExample(new CwCellBrowser(constants), RunAsyncCode.runAsyncCode(CwCellBrowser.class));
+			category.addExample(new CwCellSampler(constants), RunAsyncCode.runAsyncCode(CwCellSampler.class));
+			category.addExample(new CwCellValidation(constants), RunAsyncCode.runAsyncCode(CwCellValidation.class));
+		}
 
-    // I18N.
-    {
-      Category category = new Category(constants.categoryI18N());
-      catList.add(category);
-      category.addExample(new CwNumberFormat(constants),
-          RunAsyncCode.runAsyncCode(CwNumberFormat.class));
-      category.addExample(new CwDateTimeFormat(constants),
-          RunAsyncCode.runAsyncCode(CwDateTimeFormat.class));
-      category.addExample(new CwMessagesExample(constants),
-          RunAsyncCode.runAsyncCode(CwMessagesExample.class));
-      category.addExample(new CwBidiInput(constants),
-          RunAsyncCode.runAsyncCode(CwBidiInput.class));
-      category.addExample(new CwBidiFormatting(constants),
-          RunAsyncCode.runAsyncCode(CwBidiFormatting.class));
-      category.addExample(new CwPluralFormsExample(constants),
-          RunAsyncCode.runAsyncCode(CwPluralFormsExample.class));
-      category.addExample(new CwConstantsExample(constants),
-          RunAsyncCode.runAsyncCode(CwConstantsExample.class));
-      category.addExample(new CwConstantsWithLookupExample(constants),
-          RunAsyncCode.runAsyncCode(CwConstantsWithLookupExample.class));
-      category.addExample(new CwDictionaryExample(constants),
-          RunAsyncCode.runAsyncCode(CwDictionaryExample.class));
-    }
+		// I18N.
+		{
+			Category category = new Category(constants.categoryI18N());
+			catList.add(category);
+			category.addExample(new CwNumberFormat(constants), RunAsyncCode.runAsyncCode(CwNumberFormat.class));
+			category.addExample(new CwDateTimeFormat(constants), RunAsyncCode.runAsyncCode(CwDateTimeFormat.class));
+			category.addExample(new CwMessagesExample(constants), RunAsyncCode.runAsyncCode(CwMessagesExample.class));
+			category.addExample(new CwBidiInput(constants), RunAsyncCode.runAsyncCode(CwBidiInput.class));
+			category.addExample(new CwBidiFormatting(constants), RunAsyncCode.runAsyncCode(CwBidiFormatting.class));
+			category.addExample(new CwPluralFormsExample(constants),
+					RunAsyncCode.runAsyncCode(CwPluralFormsExample.class));
+			category.addExample(new CwConstantsExample(constants), RunAsyncCode.runAsyncCode(CwConstantsExample.class));
+			category.addExample(new CwConstantsWithLookupExample(constants),
+					RunAsyncCode.runAsyncCode(CwConstantsWithLookupExample.class));
+			category.addExample(new CwDictionaryExample(constants),
+					RunAsyncCode.runAsyncCode(CwDictionaryExample.class));
+		}
 
-    // Other.
-    {
-      Category category = new Category(constants.categoryOther());
-      catList.add(category);
-      category.addExample(new CwAnimation(constants),
-          RunAsyncCode.runAsyncCode(CwAnimation.class));
-      category.addExample(new CwCookies(constants),
-          RunAsyncCode.runAsyncCode(CwCookies.class));
-    }
-  }
+		// Other.
+		{
+			Category category = new Category(constants.categoryOther());
+			catList.add(category);
+			category.addExample(new CwAnimation(constants), RunAsyncCode.runAsyncCode(CwAnimation.class));
+			category.addExample(new CwCookies(constants), RunAsyncCode.runAsyncCode(CwCookies.class));
+		}
+	}
 }

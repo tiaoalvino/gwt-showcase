@@ -44,184 +44,185 @@ import com.google.gwt.view.client.SingleSelectionModel;
 /**
  * Example file.
  */
-@ShowcaseRaw({
-    "ContactDatabase.java", "CwCellList.ui.xml", "ContactInfoForm.java",
-    "ShowMorePagerPanel.java", "RangeLabelPager.java"})
+@ShowcaseRaw({ "ContactDatabase.java", "CwCellList.ui.xml", "ContactInfoForm.java", "ShowMorePagerPanel.java",
+		"RangeLabelPager.java" })
 public class CwCellList extends ContentWidget {
 
-  /**
-   * The UiBinder interface used by this example.
-   */
-  @ShowcaseSource
-  interface Binder extends UiBinder<Widget, CwCellList> {
-  }
+	/**
+	 * The UiBinder interface used by this example.
+	 */
+	@ShowcaseSource
+	interface Binder extends UiBinder<Widget, CwCellList> {
+	}
 
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwCellListDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwCellListDescription();
 
-    String cwCellListName();
-  }
+		String cwCellListName();
+	}
 
-  /**
-   * The images used for this example.
-   */
-  @ShowcaseSource
-  static interface Images extends ClientBundle {
-    ImageResource contact();
-  }
+	/**
+	 * The images used for this example.
+	 */
+	@ShowcaseSource
+	static interface Images extends ClientBundle {
+		ImageResource contact();
+	}
 
-  /**
-   * The Cell used to render a {@link ContactInfo}.
-   */
-  @ShowcaseSource
-  static class ContactCell extends AbstractCell<ContactInfo> {
+	/**
+	 * The Cell used to render a {@link ContactInfo}.
+	 */
+	@ShowcaseSource
+	static class ContactCell extends AbstractCell<ContactInfo> {
 
-    /**
-     * The html of the image used for contacts.
-     */
-    private final String imageHtml;
+		/**
+		 * The html of the image used for contacts.
+		 */
+		private final String imageHtml;
 
-    public ContactCell(ImageResource image) {
-      this.imageHtml = AbstractImagePrototype.create(image).getHTML();
-    }
+		public ContactCell(ImageResource image) {
+			this.imageHtml = AbstractImagePrototype.create(image).getHTML();
+		}
 
-    @Override
-    public void render(Context context, ContactInfo value, SafeHtmlBuilder sb) {
-      // Value can be null, so do a null check..
-      if (value == null) {
-        return;
-      }
+		@Override
+		public void render(Context context, ContactInfo value, SafeHtmlBuilder sb) {
+			// Value can be null, so do a null check..
+			if (value == null) {
+				return;
+			}
 
-      sb.appendHtmlConstant("<table>");
+			sb.appendHtmlConstant("<table>");
 
-      // Add the contact image.
-      sb.appendHtmlConstant("<tr><td rowspan='3'>");
-      sb.appendHtmlConstant(imageHtml);
-      sb.appendHtmlConstant("</td>");
+			// Add the contact image.
+			sb.appendHtmlConstant("<tr><td rowspan='3'>");
+			sb.appendHtmlConstant(imageHtml);
+			sb.appendHtmlConstant("</td>");
 
-      // Add the name and address.
-      sb.appendHtmlConstant("<td style='font-size:95%;'>");
-      sb.appendEscaped(value.getFullName());
-      sb.appendHtmlConstant("</td></tr><tr><td>");
-      sb.appendEscaped(value.getAddress());
-      sb.appendHtmlConstant("</td></tr></table>");
-    }
-  }
+			// Add the name and address.
+			sb.appendHtmlConstant("<td style='font-size:95%;'>");
+			sb.appendEscaped(value.getFullName());
+			sb.appendHtmlConstant("</td></tr><tr><td>");
+			sb.appendEscaped(value.getAddress());
+			sb.appendHtmlConstant("</td></tr></table>");
+		}
+	}
 
-  /**
-   * The contact form used to update contacts.
-   */
-  @ShowcaseData
-  @UiField
-  ContactInfoForm contactForm;
+	/**
+	 * The contact form used to update contacts.
+	 */
+	@ShowcaseData
+	@UiField
+	ContactInfoForm contactForm;
 
-  /**
-   * The button used to generate more contacts.
-   */
-  @ShowcaseData
-  @UiField
-  Button generateButton;
+	/**
+	 * The button used to generate more contacts.
+	 */
+	@ShowcaseData
+	@UiField
+	Button generateButton;
 
-  /**
-   * The pager used to change the range of data.
-   */
-  @ShowcaseData
-  @UiField
-  ShowMorePagerPanel pagerPanel;
+	/**
+	 * The pager used to change the range of data.
+	 */
+	@ShowcaseData
+	@UiField
+	ShowMorePagerPanel pagerPanel;
 
-  /**
-   * The pager used to display the current range.
-   */
-  @ShowcaseData
-  @UiField
-  RangeLabelPager rangeLabelPager;
+	/**
+	 * The pager used to display the current range.
+	 */
+	@ShowcaseData
+	@UiField
+	RangeLabelPager rangeLabelPager;
 
-  /**
-   * The CellList.
-   */
-  @ShowcaseData
-  private CellList<ContactInfo> cellList;
+	/**
+	 * The CellList.
+	 */
+	@ShowcaseData
+	private CellList<ContactInfo> cellList;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwCellList(CwConstants constants) {
-    super(constants.cwCellListName(), constants.cwCellListDescription(), false,
-        "ContactDatabase.java", "CwCellList.ui.xml", "ContactInfoForm.java",
-        "ShowMorePagerPanel.java", "RangeLabelPager.java");
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwCellList(CwConstants constants) {
+		super(constants.cwCellListName(), constants.cwCellListDescription(), false, "ContactDatabase.java",
+				"CwCellList.ui.xml", "ContactInfoForm.java", "ShowMorePagerPanel.java", "RangeLabelPager.java");
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    Images images = GWT.create(Images.class);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		Images images = GWT.create(Images.class);
 
-    // Create a CellList.
-    ContactCell contactCell = new ContactCell(images.contact());
+		// Create a CellList.
+		ContactCell contactCell = new ContactCell(images.contact());
 
-    // Set a key provider that provides a unique key for each contact. If key is
-    // used to identify contacts when fields (such as the name and address)
-    // change.
-    cellList = new CellList<ContactInfo>(contactCell,
-        ContactDatabase.ContactInfo.KEY_PROVIDER);
-    cellList.setPageSize(30);
-    cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-    cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		// Set a key provider that provides a unique key for each contact. If
+		// key is
+		// used to identify contacts when fields (such as the name and address)
+		// change.
+		cellList = new CellList<ContactInfo>(contactCell, ContactDatabase.ContactInfo.KEY_PROVIDER);
+		cellList.setPageSize(30);
+		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
-    // Add a selection model so we can select cells.
-    final SingleSelectionModel<ContactInfo> selectionModel = new SingleSelectionModel<ContactInfo>(
-        ContactDatabase.ContactInfo.KEY_PROVIDER);
-    cellList.setSelectionModel(selectionModel);
-    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-      public void onSelectionChange(SelectionChangeEvent event) {
-        contactForm.setContact(selectionModel.getSelectedObject());
-      }
-    });
+		// Add a selection model so we can select cells.
+		final SingleSelectionModel<ContactInfo> selectionModel = new SingleSelectionModel<ContactInfo>(
+				ContactDatabase.ContactInfo.KEY_PROVIDER);
+		cellList.setSelectionModel(selectionModel);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				contactForm.setContact(selectionModel.getSelectedObject());
+			}
+		});
 
-    // Create the UiBinder.
-    Binder uiBinder = GWT.create(Binder.class);
-    Widget widget = uiBinder.createAndBindUi(this);
+		// Create the UiBinder.
+		Binder uiBinder = GWT.create(Binder.class);
+		Widget widget = uiBinder.createAndBindUi(this);
 
-    // Add the CellList to the data provider in the database.
-    ContactDatabase.get().addDataDisplay(cellList);
+		// Add the CellList to the data provider in the database.
+		ContactDatabase.get().addDataDisplay(cellList);
 
-    // Set the cellList as the display of the pagers. This example has two
-    // pagers. pagerPanel is a scrollable pager that extends the range when the
-    // user scrolls to the bottom. rangeLabelPager is a pager that displays the
-    // current range, but does not have any controls to change the range.
-    pagerPanel.setDisplay(cellList);
-    rangeLabelPager.setDisplay(cellList);
+		// Set the cellList as the display of the pagers. This example has two
+		// pagers. pagerPanel is a scrollable pager that extends the range when
+		// the
+		// user scrolls to the bottom. rangeLabelPager is a pager that displays
+		// the
+		// current range, but does not have any controls to change the range.
+		pagerPanel.setDisplay(cellList);
+		rangeLabelPager.setDisplay(cellList);
 
-    // Handle events from the generate button.
-    generateButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        ContactDatabase.get().generateContacts(50);
-      }
-    });
+		// Handle events from the generate button.
+		generateButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ContactDatabase.get().generateContacts(50);
+			}
+		});
 
-    return widget;
-  }
+		return widget;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwCellList.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwCellList.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

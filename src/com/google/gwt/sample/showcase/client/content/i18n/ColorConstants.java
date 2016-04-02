@@ -21,19 +21,19 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
  * Internationalized constants used to demonstrate {@link ConstantsWithLookup}.
  */
 public interface ColorConstants extends ConstantsWithLookup {
-  String black();
+	String black();
 
-  String blue();
+	String blue();
 
-  String green();
+	String green();
 
-  String grey();
+	String grey();
 
-  String lightGrey();
+	String lightGrey();
 
-  String red();
+	String red();
 
-  String white();
+	String white();
 
-  String yellow();
+	String yellow();
 }

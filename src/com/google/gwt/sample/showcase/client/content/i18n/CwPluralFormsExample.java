@@ -40,138 +40,138 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseRaw({"PluralMessages.java", "PluralMessages_fr.properties"})
+@ShowcaseRaw({ "PluralMessages.java", "PluralMessages_fr.properties" })
 public class CwPluralFormsExample extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwPluralFormsExampleArg0Label();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwPluralFormsExampleArg0Label();
 
-    String cwPluralFormsExampleDescription();
+		String cwPluralFormsExampleDescription();
 
-    String cwPluralFormsExampleFormattedLabel();
+		String cwPluralFormsExampleFormattedLabel();
 
-    String cwPluralFormsExampleLinkText();
+		String cwPluralFormsExampleLinkText();
 
-    String cwPluralFormsExampleName();
-  }
+		String cwPluralFormsExampleName();
+	}
 
-  /**
-   * The {@link TextBox} where the user enters argument 0.
-   */
-  @ShowcaseData
-  private TextBox arg0Box = null;
+	/**
+	 * The {@link TextBox} where the user enters argument 0.
+	 */
+	@ShowcaseData
+	private TextBox arg0Box = null;
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * The {@link Label} used to display the message.
-   */
-  @ShowcaseData
-  private Label formattedMessage = null;
+	/**
+	 * The {@link Label} used to display the message.
+	 */
+	@ShowcaseData
+	private Label formattedMessage = null;
 
-  /**
-   * The plural messages used in this example.
-   */
-  @ShowcaseData
-  private PluralMessages pluralMessages = null;
+	/**
+	 * The plural messages used in this example.
+	 */
+	@ShowcaseData
+	private PluralMessages pluralMessages = null;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwPluralFormsExample(CwConstants constants) {
-    super(constants.cwPluralFormsExampleName(),
-        constants.cwPluralFormsExampleDescription(), false,
-        "PluralMessages.java", "PluralMessages_fr.properties");
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwPluralFormsExample(CwConstants constants) {
+		super(constants.cwPluralFormsExampleName(), constants.cwPluralFormsExampleDescription(), false,
+				"PluralMessages.java", "PluralMessages_fr.properties");
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create the internationalized error messages
-    pluralMessages = GWT.create(PluralMessages.class);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create the internationalized error messages
+		pluralMessages = GWT.create(PluralMessages.class);
 
-    // Use a FlexTable to layout the content
-    FlexTable layout = new FlexTable();
-    FlexCellFormatter formatter = layout.getFlexCellFormatter();
-    layout.setCellSpacing(5);
+		// Use a FlexTable to layout the content
+		FlexTable layout = new FlexTable();
+		FlexCellFormatter formatter = layout.getFlexCellFormatter();
+		layout.setCellSpacing(5);
 
-    // Add a link to the source code of the Interface
-    final String rawFile = getSimpleName(PluralMessages.class);
-    Anchor link = new Anchor(rawFile);
-    link.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        fireRawSourceRequest(rawFile + ".java");
-      }
-    });
-    HorizontalPanel linkPanel = new HorizontalPanel();
-    linkPanel.setSpacing(3);
-    linkPanel.add(new HTML(constants.cwPluralFormsExampleLinkText()));
-    linkPanel.add(link);
-    layout.setWidget(0, 0, linkPanel);
-    formatter.setColSpan(0, 0, 2);
+		// Add a link to the source code of the Interface
+		final String rawFile = getSimpleName(PluralMessages.class);
+		Anchor link = new Anchor(rawFile);
+		link.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				fireRawSourceRequest(rawFile + ".java");
+			}
+		});
+		HorizontalPanel linkPanel = new HorizontalPanel();
+		linkPanel.setSpacing(3);
+		linkPanel.add(new HTML(constants.cwPluralFormsExampleLinkText()));
+		linkPanel.add(link);
+		layout.setWidget(0, 0, linkPanel);
+		formatter.setColSpan(0, 0, 2);
 
-    // Add argument 0
-    arg0Box = new TextBox();
-    arg0Box.setText("13");
-    layout.setHTML(2, 0, constants.cwPluralFormsExampleArg0Label());
-    layout.setWidget(2, 1, arg0Box);
+		// Add argument 0
+		arg0Box = new TextBox();
+		arg0Box.setText("13");
+		layout.setHTML(2, 0, constants.cwPluralFormsExampleArg0Label());
+		layout.setWidget(2, 1, arg0Box);
 
-    // Add the formatted message
-    formattedMessage = new Label();
-    layout.setHTML(5, 0, constants.cwPluralFormsExampleFormattedLabel());
-    layout.setWidget(5, 1, formattedMessage);
-    formatter.setVerticalAlignment(5, 0, HasVerticalAlignment.ALIGN_TOP);
+		// Add the formatted message
+		formattedMessage = new Label();
+		layout.setHTML(5, 0, constants.cwPluralFormsExampleFormattedLabel());
+		layout.setWidget(5, 1, formattedMessage);
+		formatter.setVerticalAlignment(5, 0, HasVerticalAlignment.ALIGN_TOP);
 
-    // Add handlers to all of the argument boxes
-    KeyUpHandler keyUpHandler = new KeyUpHandler() {
-      public void onKeyUp(KeyUpEvent event) {
-        updateMessage();
-      }
-    };
-    arg0Box.addKeyUpHandler(keyUpHandler);
+		// Add handlers to all of the argument boxes
+		KeyUpHandler keyUpHandler = new KeyUpHandler() {
+			public void onKeyUp(KeyUpEvent event) {
+				updateMessage();
+			}
+		};
+		arg0Box.addKeyUpHandler(keyUpHandler);
 
-    // Return the layout Widget
-    updateMessage();
-    return layout;
-  }
+		// Return the layout Widget
+		updateMessage();
+		return layout;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwPluralFormsExample.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwPluralFormsExample.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Update the formatted message.
-   */
-  @ShowcaseSource
-  private void updateMessage() {
-    try {
-      int count = Integer.parseInt(arg0Box.getText().trim());
-      formattedMessage.setText(pluralMessages.treeCount(count));
-    } catch (NumberFormatException e) {
-      // Ignore.
-    }
-  }
+	/**
+	 * Update the formatted message.
+	 */
+	@ShowcaseSource
+	private void updateMessage() {
+		try {
+			int count = Integer.parseInt(arg0Box.getText().trim());
+			formattedMessage.setText(pluralMessages.treeCount(count));
+		} catch (NumberFormatException e) {
+			// Ignore.
+		}
+	}
 }

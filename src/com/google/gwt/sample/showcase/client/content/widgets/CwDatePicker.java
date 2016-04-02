@@ -39,121 +39,122 @@ import java.util.Date;
 /**
  * Example file.
  */
-@ShowcaseStyle({
-    ".gwt-DatePicker", ".datePicker", "td.datePickerMonth", ".gwt-DateBox",
-    ".dateBox"})
+@ShowcaseStyle({ ".gwt-DatePicker", ".datePicker", "td.datePickerMonth", ".gwt-DateBox", ".dateBox" })
 public class CwDatePicker extends ContentWidget {
 
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwDatePickerBoxLabel();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwDatePickerBoxLabel();
 
-    String cwDatePickerDescription();
+		String cwDatePickerDescription();
 
-    String cwDatePickerLabel();
+		String cwDatePickerLabel();
 
-    String cwDatePickerName();
-  }
+		String cwDatePickerName();
+	}
 
-  /**
-   * {@link ValueChangeHandler} used to set the value in the text box when the user selects a date
-   */
-  @ShowcaseSource
-  public static class MyDateValueChangeHandler implements ValueChangeHandler<Date> {
-    private final Label text;
+	/**
+	 * {@link ValueChangeHandler} used to set the value in the text box when the
+	 * user selects a date
+	 */
+	@ShowcaseSource
+	public static class MyDateValueChangeHandler implements ValueChangeHandler<Date> {
+		private final Label text;
 
-    public MyDateValueChangeHandler(Label text) {
-      this.text = text;
-    }
+		public MyDateValueChangeHandler(Label text) {
+			this.text = text;
+		}
 
-    public void onValueChange(ValueChangeEvent<Date> event) {
-      Date date = event.getValue();
-      String dateString = DateTimeFormat.getMediumDateFormat().format(date);
-      text.setText(dateString);
-    }
-  }
+		public void onValueChange(ValueChangeEvent<Date> event) {
+			Date date = event.getValue();
+			String dateString = DateTimeFormat.getMediumDateFormat().format(date);
+			text.setText(dateString);
+		}
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwDatePicker(CwConstants constants) {
-    super(constants.cwDatePickerName(), constants.cwDatePickerDescription(),
-        true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwDatePicker(CwConstants constants) {
+		super(constants.cwDatePickerName(), constants.cwDatePickerDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @SuppressWarnings("deprecation")
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a basic date picker
-    DatePicker datePicker = new DatePicker();
-    final Label text = new Label();
+	/**
+	 * Initialize this example.
+	 */
+	@SuppressWarnings("deprecation")
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a basic date picker
+		DatePicker datePicker = new DatePicker();
+		final Label text = new Label();
 
-    // Set the value in the text box when the user selects a date
-    datePicker.addValueChangeHandler(new MyDateValueChangeHandler(text));
+		// Set the value in the text box when the user selects a date
+		datePicker.addValueChangeHandler(new MyDateValueChangeHandler(text));
 
-    // create a date picker where years and months are selectable with drop down lists and where we
-    // can navigate trough the years
-    DatePicker advancedDatePicker = new DatePicker();
-    advancedDatePicker.setYearArrowsVisible(true);
-    advancedDatePicker.setYearAndMonthDropdownVisible(true);
-    // show 51 years in the years dropdown. The range of years is centered on the selected date
-    advancedDatePicker.setVisibleYearCount(51);
+		// create a date picker where years and months are selectable with drop
+		// down lists and where we
+		// can navigate trough the years
+		DatePicker advancedDatePicker = new DatePicker();
+		advancedDatePicker.setYearArrowsVisible(true);
+		advancedDatePicker.setYearAndMonthDropdownVisible(true);
+		// show 51 years in the years dropdown. The range of years is centered
+		// on the selected date
+		advancedDatePicker.setVisibleYearCount(51);
 
-    final Label text2 = new Label();
-    text2.getElement().getStyle().setMarginTop(15, Unit.PX);
+		final Label text2 = new Label();
+		text2.getElement().getStyle().setMarginTop(15, Unit.PX);
 
-    // Set the value in the text box when the user selects a date
-    advancedDatePicker.addValueChangeHandler(new MyDateValueChangeHandler(text2));
+		// Set the value in the text box when the user selects a date
+		advancedDatePicker.addValueChangeHandler(new MyDateValueChangeHandler(text2));
 
-    // Set the default value
-    datePicker.setValue(new Date(), true);
-    advancedDatePicker.setValue(new Date(), true);
+		// Set the default value
+		datePicker.setValue(new Date(), true);
+		advancedDatePicker.setValue(new Date(), true);
 
-    // Create a DateBox
-    DateTimeFormat dateFormat = DateTimeFormat.getLongDateFormat();
-    DateBox dateBox = new DateBox();
-    dateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
-    dateBox.getDatePicker().setYearArrowsVisible(true);
+		// Create a DateBox
+		DateTimeFormat dateFormat = DateTimeFormat.getLongDateFormat();
+		DateBox dateBox = new DateBox();
+		dateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+		dateBox.getDatePicker().setYearArrowsVisible(true);
 
-    // Combine the widgets into a panel and return them
-    VerticalPanel vPanel = new VerticalPanel();
-    vPanel.add(new HTML(constants.cwDatePickerLabel()));
-    vPanel.add(text);
-    vPanel.add(datePicker);
-    vPanel.add(text2);
-    vPanel.add(advancedDatePicker);
-    vPanel.add(new HTML(constants.cwDatePickerBoxLabel()));
-    vPanel.add(dateBox);
-    return vPanel;
-  }
+		// Combine the widgets into a panel and return them
+		VerticalPanel vPanel = new VerticalPanel();
+		vPanel.add(new HTML(constants.cwDatePickerLabel()));
+		vPanel.add(text);
+		vPanel.add(datePicker);
+		vPanel.add(text2);
+		vPanel.add(advancedDatePicker);
+		vPanel.add(new HTML(constants.cwDatePickerBoxLabel()));
+		vPanel.add(dateBox);
+		return vPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwDatePicker.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwDatePicker.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

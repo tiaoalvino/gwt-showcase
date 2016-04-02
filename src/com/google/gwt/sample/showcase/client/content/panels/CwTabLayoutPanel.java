@@ -34,90 +34,90 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Example file.
  */
-@ShowcaseStyle({
-    ".gwt-DecoratedTabBar", "html>body .gwt-DecoratedTabBar", "* html .gwt-DecoratedTabBar",
-    ".gwt-TabPanel"})
+@ShowcaseStyle({ ".gwt-DecoratedTabBar", "html>body .gwt-DecoratedTabBar", "* html .gwt-DecoratedTabBar",
+		".gwt-TabPanel" })
 public class CwTabLayoutPanel extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwTabPanelDescription();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwTabPanelDescription();
 
-    String cwTabPanelName();
+		String cwTabPanelName();
 
-    String cwTabPanelTab0();
+		String cwTabPanelTab0();
 
-    String cwTabPanelTab2();
+		String cwTabPanelTab2();
 
-    String[] cwTabPanelTabs();
-  }
+		String[] cwTabPanelTabs();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwTabLayoutPanel(CwConstants constants) {
-    super(constants.cwTabPanelName(), constants.cwTabPanelDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwTabLayoutPanel(CwConstants constants) {
+		super(constants.cwTabPanelName(), constants.cwTabPanelDescription(), true);
+		this.constants = constants;
+	}
 
-  @Override
-  public boolean hasScrollableContent() {
-    return false;
-  }
+	@Override
+	public boolean hasScrollableContent() {
+		return false;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a tab panel
-    TabLayoutPanel tabPanel = new TabLayoutPanel(2.5, Unit.EM);
-    tabPanel.setAnimationDuration(1000);
-    tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a tab panel
+		TabLayoutPanel tabPanel = new TabLayoutPanel(2.5, Unit.EM);
+		tabPanel.setAnimationDuration(1000);
+		tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 
-    // Add a home tab
-    String[] tabTitles = constants.cwTabPanelTabs();
-    HTML homeText = new HTML(constants.cwTabPanelTab0());
-    tabPanel.add(homeText, tabTitles[0]);
+		// Add a home tab
+		String[] tabTitles = constants.cwTabPanelTabs();
+		HTML homeText = new HTML(constants.cwTabPanelTab0());
+		tabPanel.add(homeText, tabTitles[0]);
 
-    // Add a tab with an image
-    SimplePanel imageContainer = new SimplePanel();
-    imageContainer.setWidget(new Image(Showcase.images.gwtLogo()));
-    tabPanel.add(imageContainer, tabTitles[1]);
+		// Add a tab with an image
+		SimplePanel imageContainer = new SimplePanel();
+		imageContainer.setWidget(new Image(Showcase.images.gwtLogo()));
+		tabPanel.add(imageContainer, tabTitles[1]);
 
-    // Add a tab
-    HTML moreInfo = new HTML(constants.cwTabPanelTab2());
-    tabPanel.add(moreInfo, tabTitles[2]);
+		// Add a tab
+		HTML moreInfo = new HTML(constants.cwTabPanelTab2());
+		tabPanel.add(moreInfo, tabTitles[2]);
 
-    // Return the content
-    tabPanel.selectTab(0);
-    tabPanel.ensureDebugId("cwTabPanel");
+		// Return the content
+		tabPanel.selectTab(0);
+		tabPanel.ensureDebugId("cwTabPanel");
 
-    return tabPanel;
-  }
+		return tabPanel;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwTabLayoutPanel.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwTabLayoutPanel.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }

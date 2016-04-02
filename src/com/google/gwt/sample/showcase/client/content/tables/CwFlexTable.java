@@ -40,125 +40,122 @@ import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
  */
 @ShowcaseStyle(".cw-FlexTable")
 public class CwFlexTable extends ContentWidget {
-  /**
-   * The constants used in this Content Widget.
-   */
-  @ShowcaseSource
-  public static interface CwConstants extends Constants {
-    String cwFlexTableAddRow();
+	/**
+	 * The constants used in this Content Widget.
+	 */
+	@ShowcaseSource
+	public static interface CwConstants extends Constants {
+		String cwFlexTableAddRow();
 
-    String cwFlexTableDescription();
+		String cwFlexTableDescription();
 
-    String cwFlexTableDetails();
+		String cwFlexTableDetails();
 
-    String cwFlexTableName();
+		String cwFlexTableName();
 
-    String cwFlexTableRemoveRow();
-  }
+		String cwFlexTableRemoveRow();
+	}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private final CwConstants constants;
+	/**
+	 * An instance of the constants.
+	 */
+	@ShowcaseData
+	private final CwConstants constants;
 
-  /**
-   * Constructor.
-   *
-   * @param constants the constants
-   */
-  public CwFlexTable(CwConstants constants) {
-    super(
-        constants.cwFlexTableName(), constants.cwFlexTableDescription(), true);
-    this.constants = constants;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param constants
+	 *            the constants
+	 */
+	public CwFlexTable(CwConstants constants) {
+		super(constants.cwFlexTableName(), constants.cwFlexTableDescription(), true);
+		this.constants = constants;
+	}
 
-  /**
-   * Initialize this example.
-   */
-  @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
-    // Create a Flex Table
-    final FlexTable flexTable = new FlexTable();
-    FlexCellFormatter cellFormatter = flexTable.getFlexCellFormatter();
-    flexTable.addStyleName("cw-FlexTable");
-    flexTable.setWidth("32em");
-    flexTable.setCellSpacing(5);
-    flexTable.setCellPadding(3);
+	/**
+	 * Initialize this example.
+	 */
+	@ShowcaseSource
+	@Override
+	public Widget onInitialize() {
+		// Create a Flex Table
+		final FlexTable flexTable = new FlexTable();
+		FlexCellFormatter cellFormatter = flexTable.getFlexCellFormatter();
+		flexTable.addStyleName("cw-FlexTable");
+		flexTable.setWidth("32em");
+		flexTable.setCellSpacing(5);
+		flexTable.setCellPadding(3);
 
-    // Add some text
-    cellFormatter.setHorizontalAlignment(
-        0, 1, HasHorizontalAlignment.ALIGN_LEFT);
-    flexTable.setHTML(0, 0, constants.cwFlexTableDetails());
-    cellFormatter.setColSpan(0, 0, 2);
+		// Add some text
+		cellFormatter.setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_LEFT);
+		flexTable.setHTML(0, 0, constants.cwFlexTableDetails());
+		cellFormatter.setColSpan(0, 0, 2);
 
-    // Add a button that will add more rows to the table
-    Button addRowButton = new Button(
-        constants.cwFlexTableAddRow(), new ClickHandler() {
-          public void onClick(ClickEvent event) {
-            addRow(flexTable);
-          }
-        });
-    addRowButton.addStyleName("sc-FixedWidthButton");
+		// Add a button that will add more rows to the table
+		Button addRowButton = new Button(constants.cwFlexTableAddRow(), new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				addRow(flexTable);
+			}
+		});
+		addRowButton.addStyleName("sc-FixedWidthButton");
 
-    Button removeRowButton = new Button(
-        constants.cwFlexTableRemoveRow(), new ClickHandler() {
-          public void onClick(ClickEvent event) {
-            removeRow(flexTable);
-          }
-        });
-    removeRowButton.addStyleName("sc-FixedWidthButton");
-    VerticalPanel buttonPanel = new VerticalPanel();
-    buttonPanel.setStyleName("cw-FlexTable-buttonPanel");
-    buttonPanel.add(addRowButton);
-    buttonPanel.add(removeRowButton);
-    flexTable.setWidget(0, 1, buttonPanel);
-    cellFormatter.setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_TOP);
+		Button removeRowButton = new Button(constants.cwFlexTableRemoveRow(), new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				removeRow(flexTable);
+			}
+		});
+		removeRowButton.addStyleName("sc-FixedWidthButton");
+		VerticalPanel buttonPanel = new VerticalPanel();
+		buttonPanel.setStyleName("cw-FlexTable-buttonPanel");
+		buttonPanel.add(addRowButton);
+		buttonPanel.add(removeRowButton);
+		flexTable.setWidget(0, 1, buttonPanel);
+		cellFormatter.setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_TOP);
 
-    // Add two rows to start
-    addRow(flexTable);
-    addRow(flexTable);
+		// Add two rows to start
+		addRow(flexTable);
+		addRow(flexTable);
 
-    // Return the panel
-    flexTable.ensureDebugId("cwFlexTable");
-    return flexTable;
-  }
+		// Return the panel
+		flexTable.ensureDebugId("cwFlexTable");
+		return flexTable;
+	}
 
-  @Override
-  protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
-    GWT.runAsync(CwFlexTable.class, new RunAsyncCallback() {
+	@Override
+	protected void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+		GWT.runAsync(CwFlexTable.class, new RunAsyncCallback() {
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
-  }
+			public void onSuccess() {
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 
-  /**
-   * Add a row to the flex table.
-   */
-  @ShowcaseSource
-  private void addRow(FlexTable flexTable) {
-    int numRows = flexTable.getRowCount();
-    flexTable.setWidget(numRows, 0, new Image(Showcase.images.gwtLogo()));
-    flexTable.setWidget(numRows, 1, new Image(Showcase.images.gwtLogo()));
-    flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows + 1);
-  }
+	/**
+	 * Add a row to the flex table.
+	 */
+	@ShowcaseSource
+	private void addRow(FlexTable flexTable) {
+		int numRows = flexTable.getRowCount();
+		flexTable.setWidget(numRows, 0, new Image(Showcase.images.gwtLogo()));
+		flexTable.setWidget(numRows, 1, new Image(Showcase.images.gwtLogo()));
+		flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows + 1);
+	}
 
-  /**
-   * Remove a row from the flex table.
-   */
-  @ShowcaseSource
-  private void removeRow(FlexTable flexTable) {
-    int numRows = flexTable.getRowCount();
-    if (numRows > 1) {
-      flexTable.removeRow(numRows - 1);
-      flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows - 1);
-    }
-  }
+	/**
+	 * Remove a row from the flex table.
+	 */
+	@ShowcaseSource
+	private void removeRow(FlexTable flexTable) {
+		int numRows = flexTable.getRowCount();
+		if (numRows > 1) {
+			flexTable.removeRow(numRows - 1);
+			flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows - 1);
+		}
+	}
 }
